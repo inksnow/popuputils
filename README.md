@@ -7,20 +7,34 @@
 ![01](https://github.com/inksnow/popuputils/blob/master/11.jpg)  
 ![02](https://github.com/inksnow/popuputils/blob/master/001.gif)  
 
-使用方法：
+使用方法：<br>  
 
-build.gradle (Project)中   添加   maven { url 'https://jitpack.io' }
+build.gradle (Project)中  
 
-allprojects {
-    repositories {
-        jcenter()
-        maven { url 'https://jitpack.io' }
-    }
-}
+添加   maven { url 'https://jitpack.io' }  
 
-build.gradle (app)中 添加   implementation 'com.github.inksnow:popuputils:1.0.6'
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-     .....
-    implementation 'com.github.inksnow:popuputils:1.0.6'
-}
+allprojects {  
+
+    repositories {  
+    
+        jcenter()  
+        
+        maven { url 'https://jitpack.io' }  
+        
+    }  
+    
+}  
+
+build.gradle (app)中  
+
+添加   implementation 'com.github.inksnow:Inkslibrary:1.0.2'  
+
+dependencies {  
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])  
+    
+     ......  
+     
+    implementation 'com.github.inksnow:Inkslibrary:1.0.2'  
+    
+}  

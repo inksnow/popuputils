@@ -41,11 +41,31 @@ dependencies {
 
  //使用  
 
-
+```Java
   PromptSettings.Builder builder = new PromptSettings.Builder();  
   
   PromptSettings promptSettings = builder.build();  
   
   popupPrompt.popupPrompt(window,context,inflater,promptSettings,0);  
+  ```
+  
+  //自定义效果  
+  ```Java
+PromptSettings.Builder builder = new PromptSettings.Builder(); 
+builder = new PromptSettings.Builder();
+builder.bgAlpha(0.6f)
+        .duration(2000)
+        .bgColour(new int[]{0XFFFF0000,  0XFFFFFFFF})
+        .showImage(true)
+        .showMode(PromptSettings.MODE_SHOW_IMAGE)
+        .image(getDrawable(R.drawable.ic_launcher_foreground))
+        .imageWidth(160)
+        .imageAnim(anim)
+        .buttonColour(0XFFFF0000)
+        .popupAnim(R.style.popup_bottom_top)
+        .location(Gravity.BOTTOM);
+ promptSettings = builder.build();
+popupPrompt.popupPrompt(window,context,inflater,promptSettings,0);
+```
   
 

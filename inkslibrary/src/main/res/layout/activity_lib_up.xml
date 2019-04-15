@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#66555555">
+    <!--版本信息-->
+    <LinearLayout
+        android:id="@+id/up_info_1"
+        android:layout_width="280dp"
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        android:background="#001256"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/up_title_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="版本更新"
+            android:textColor="#ffffff"
+            android:textSize="14dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ScrollView
+                android:id="@+id/up_ScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/up_currentVersion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="当前版本"
+                        android:textColor="#ffffff"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/up_latestVersion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="最新版本"
+                        android:textColor="#ffffff"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/up_mgsTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="更新内容"
+                        android:textColor="#ffffff"
+                        android:textSize="10dp" />
+
+                    <TextView
+                        android:id="@+id/up_mgs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1xxxxxxx\n2222222\n3xxxxxxx\n4xxx\n555\n666"
+                        android:textColor="#ffffff"
+                        android:textSize="10dp" />
+
+
+                </LinearLayout>
+
+            </ScrollView>
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/up_DividingLine_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#23333333">
+
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/up_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="取消"
+                android:textColor="#ffffff"
+                android:textSize="14dp" />
+
+            <View
+                android:id="@+id/up_DividingLine_2"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#333333">
+
+            </View>
+
+            <TextView
+                android:id="@+id/up_yes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="下载"
+                android:textColor="#ffffff"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--版本信息end-->
+
+    <!--下载中-->
+    <LinearLayout
+        android:id="@+id/up_downing"
+        android:layout_width="280dp"
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        android:background="#ff0000"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/up_ProgressBar"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:indeterminateTint="#00ff00"
+          />
+
+
+
+        <TextView
+            android:id="@+id/up_loading_pro"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="正在下载：1236/45698..."
+            android:textColor="#ffffff"
+            android:padding="10dp"
+            android:textSize="10dp" />
+
+    </LinearLayout>
+    <!--下载中end-->
+
+    <!--下载失败-->
+    <LinearLayout
+        android:id="@+id/up_fail"
+        android:layout_width="280dp"
+        android:layout_height="160dp"
+        android:layout_centerInParent="true"
+        android:background="#233333"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/up_failText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="下载失败"
+            android:textColor="#ffffff"
+            android:textSize="14dp" />
+
+        <View
+            android:id="@+id/up_DividingLine_3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#233333">
+
+        </View>
+        <TextView
+            android:id="@+id/up_fail_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textSize="14dp" />
+
+    </LinearLayout>
+    <!--下载失败end-->
+</RelativeLayout>

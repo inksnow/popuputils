@@ -38,3 +38,14 @@ dependencies {
     implementation 'com.github.inksnow:popuputils:1.0.6'  
     
 }  
+
+ //使用  
+
+
+  PromptSettings.Builder builder = new PromptSettings.Builder();  
+  
+  PromptSettings promptSettings = builder.build();  
+  
+  popupPrompt.popupPrompt(window,context,inflater,promptSettings,0);  
+  
+

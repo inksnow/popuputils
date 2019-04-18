@@ -139,15 +139,18 @@ popupPrompt.popupPrompt(window,context,inflater,promptSettings,0);
 //PopupSelect使用
 
 ```Java
-               PromptSettings.Builder builder = new PromptSettings.Builder();
-                PromptSettings promptSettings = builder.build();
-                popupPrompt.popupPrompt(window,context,inflater,promptSettings,0);
+                SelectSettings.Builder builder = new SelectSettings.Builder();
+                SelectSettings selectSettings =
+                        builder.selectListDataBean(selectListDataBeans)
+                                .clickListener(selectBackListener)
+                                .build();
+                popupSelect.popupSelect(window,context,inflater,selectSettings,0);
                 
                 
                 
                  
                 builder = new SelectSettings.Builder();
-                promptSettings =
+                selectSettings =
                         builder.selectListDataBean(selectListDataBeans2)
                                 .clickListener(selectBackListener)
                                 .titleTextStr("请选择语言")
@@ -157,7 +160,7 @@ popupPrompt.popupPrompt(window,context,inflater,promptSettings,0);
                                 .multipleSelection(false)
                                 .showListIcon(true)
                                 .build();
-                popupSelect.popupSelect(window,context,inflater,promptSettings,0);
+                popupSelect.popupSelect(window,context,inflater,selectSettings,0);
 
 
   ```

@@ -240,4 +240,9 @@ public class PopupPrompt {
         }
     };
 
+
+    public PopupWindow getpWindow(){
+        return pWindow;
+    }
+
 }

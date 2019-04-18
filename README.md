@@ -27,7 +27,7 @@ allprojects {
 
 build.gradle (app)中  
 
-添加   implementation 'com.github.inksnow:popuputils:1.0.6'  
+添加   implementation 'com.github.inksnow:popuputils:1.0.7'  
 
 dependencies {  
 
@@ -35,7 +35,7 @@ dependencies {
     
      ......  
      
-    implementation 'com.github.inksnow:popuputils:1.0.6'  
+    implementation 'com.github.inksnow:popuputils:1.0.7'  
     
 }  
 

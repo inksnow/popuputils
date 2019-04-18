@@ -5,7 +5,9 @@
 
 效果图：
 ![01](https://github.com/inksnow/popuputils/blob/master/11.jpg)  
-![02](https://github.com/inksnow/popuputils/blob/master/001.gif)  
+![02](https://github.com/inksnow/popuputils/blob/master/22.jpg)  
+![03](https://github.com/inksnow/popuputils/blob/master/001.gif)  
+![04](https://github.com/inksnow/popuputils/blob/master/a1~3.gif)  
 
 使用方法：<br>  
 
@@ -39,7 +41,7 @@ dependencies {
     
 }  
 
- //使用  
+ //popupPrompt使用  
 
 ```Java
   PromptSettings.Builder builder = new PromptSettings.Builder();  
@@ -67,7 +69,7 @@ builder.bgAlpha(0.6f)
  promptSettings = builder.build();
 popupPrompt.popupPrompt(window,context,inflater,promptSettings,0);
 ```
-//可设置的属性及其默认值  
+//PopupPrompt可设置的属性及其默认值  
   ```Java
         //宽
         private int width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -134,5 +136,149 @@ popupPrompt.popupPrompt(window,context,inflater,promptSettings,0);
   ```
 
 
- 
+//PopupSelect使用
 
+```Java
+               PromptSettings.Builder builder = new PromptSettings.Builder();
+                PromptSettings promptSettings = builder.build();
+                popupPrompt.popupPrompt(window,context,inflater,promptSettings,0);
+                
+                
+                
+                 
+                builder = new SelectSettings.Builder();
+                promptSettings =
+                        builder.selectListDataBean(selectListDataBeans2)
+                                .clickListener(selectBackListener)
+                                .titleTextStr("请选择语言")
+                                .titleIcon(getDrawable(R.drawable.l))
+                                .titleTextPaddings(new int[]{10,20,0,20})
+                                .showTitleIcon(true)
+                                .multipleSelection(false)
+                                .showListIcon(true)
+                                .build();
+                popupSelect.popupSelect(window,context,inflater,promptSettings,0);
+
+
+  ```
+
+ //popupSelect可设置的属性及其默认值  
+  ```Java
+          //确认按钮点击后的回调，或单选没设置确认按钮点击list选项的回调
+        private  PopupSelect.onClickListener clickListener = null;
+        //List 数据
+        private List<SelectListDataBean> selectListDataBean = null;
+        //是否可以多选
+        private boolean multipleSelection = true;
+ 
+        //PopupWindow的一些设置，默认点击外边PopupWindow消失
+        //如果想设置点击外边不消失设置focusable = false ,outsideTouchable = false
+        //在activity中拦截点击事件
+        //     @Override
+        //    public boolean dispatchTouchEvent(MotionEvent event){
+        //        if (popupSelect.getpWindow()!= null && popupSelect.getpWindow().isShowing()){
+        //            return false;
+        //        }else{
+        //            return super.dispatchTouchEvent(event);
+        //        }
+        //    }
+        private boolean focusable = true;
+        private boolean outsideTouchable = false;
+        private boolean touchable = true;
+        private int inputMethodMode = PopupWindow.INPUT_METHOD_NEEDED;
+        private int softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE;
+        //背景色，必须大于等于2个值，设置不同的多个值为渐变效果
+        private int[] popupBg ={0XFFFFFFFF,0XFFFFFFFF};
+        // 设置图片四个角圆形半径：1、2两个参数表示左上角，3、4表示右上角，5、6表示右下角，7、8表示左下角
+        private float[] popupRadius ={20,20,20,20,20,20,20,20};
+        //Paddings 设置此值可以调节布局位置
+        private int[] titleIconPaddings = {60,10,10,10};
+        private int[] titleTextPaddings={80,20,20,20};
+        private int[] listPaddings={20,10,20,10};
+        private int[] buttonPaddings={20,20,20,20};
+        //宽
+        private int popupWidth =700;
+        //高
+        private int popupHeight=460;
+        //标题图标
+        private int titleIconWidth=140;
+        private int titleIconHeight=100;
+        //是否显示标题图标和文字布局
+        private boolean showTitle = true;
+        //标题布局背景
+        private int[] titleBg ={0X00000000,0X00000000};
+        //是否显示标题图标
+        private boolean showTitleIcon = true;
+        //标题图标资源
+        private Drawable titleIcon = null;
+        //是否显示标题文字
+        private boolean showTitleText = true;
+        //标题文字内容
+        private String titleTextStr = "请设置标题";
+        //标题文字颜色
+        private int titleTextColor = 0XFF333333;
+        //标题文字大小
+        private int titleTextSize = 18;
+        //标题文字位置
+        private int titleTextGravity = Gravity.CENTER_VERTICAL;
+        //是否显示右边滚动条
+        private boolean scrollBarEnabled = true;
+        //滚动条自动消失时间
+        private int scrollBarFadeDuration = 5000;
+        //滚动条大小
+        private int scrollBarSize = 5;
+        //滚动条style
+        private int scrollBarStyle =View.SCROLLBARS_INSIDE_INSET ;
+        //button1文字
+        private String buttonTextStr1 = "取消";
+        //button2文字
+        private String buttonTextStr2 = "确定";
+        //按钮字体大小
+        private int buttonTextSize = 18;
+        //按钮文字颜色
+        private int buttonTextColor1=0XFF03a9f4;
+        private int buttonTextColor2=0XFF03a9f4;
+        //是否显示该按钮
+        private boolean showButton1 = true;
+        private boolean showButton2 = true;
+        //标题下分割线颜色
+        private int titleDividingColor = 0X33AAAAAA;
+        //按钮分割线颜色
+        private int buttonDividingColor= 0X33AAAAAA;
+        //每一条list高度
+        private int listHeight = 100;
+        //list选框高宽
+        private int listSelectImageHeight = 80;
+        private int listSelectImageWidth = 110;
+        //list 图标高宽
+        private int listIconHeight = 80;
+        private int listIconWidth = 80;
+        //list文字大小
+        private int listTextSize = 16;
+        //paddings
+        private int[] listSelectImagePaddings={60,10,10,10};
+        private int[] listIconPaddings={20,10,10,10};
+        private int[] listTextPaddings={10,10,10,10};
+        //选中选框
+        private Drawable listSelectImageOn = null;
+        //未选中选框
+        private Drawable listSelectImageOff = null;
+        private Drawable listIcon = null;
+        //list文字颜色
+        private int listTextColor = 0XFF333333;
+        //list选中后文字颜色
+        private int listTextSelectColor = 0XFF03a9f4;
+        //list文字位置
+        private int listTextGravity = Gravity.CENTER_VERTICAL;
+        //是否显示选框
+        private boolean showListSelectImage = true;
+        //是否显示图标
+        private boolean showListIcon = true;
+        //list分割线
+        private  Drawable listDivider = null;
+        //list分割线高度
+        private  int listDividerHeight = 1;
+        //背景透明度
+        private float bgAlpha = 0.6f;
+
+  ```

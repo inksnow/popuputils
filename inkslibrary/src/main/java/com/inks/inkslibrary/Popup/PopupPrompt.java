@@ -96,6 +96,8 @@ public class PopupPrompt {
             });
 
 
+            pWindow.setClippingEnabled(promptSettings.isClippingEnabled());
+
             pWindow.showAtLocation(window.getDecorView(), promptSettings.getLocation(), promptSettings.getGravityX(), promptSettings.getGravityY());
 
             if(promptSettings.getDuration()>0){

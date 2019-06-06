@@ -57,6 +57,12 @@ public class PromptSettings {
     private final int gravityX;
     private final int gravityY;
 
+    private final boolean clippingEnabled;
+
+    public boolean isClippingEnabled() {
+        return clippingEnabled;
+    }
+
     public float getTextSize() {
         return textSize;
     }
@@ -256,8 +262,16 @@ public class PromptSettings {
         private int gravityX = 0;
         private int gravityY = 0;
 
+        private boolean clippingEnabled = false;
+
         public Builder() {
         }
+
+        public Builder clippingEnabled(boolean clippingEnabled) {
+            this.clippingEnabled = clippingEnabled;
+            return this;
+        }
+
 
         public Builder width(int width) {
             this.width = width;
@@ -471,9 +485,9 @@ public class PromptSettings {
         gravityX = builder.gravityX;
         gravityY = builder.gravityY;
         textSize = builder.textSize;
+        clippingEnabled = builder.clippingEnabled;
+
     }
-
-
 }
 
 

@@ -88,9 +88,16 @@ public class SelectSettings {
     //背景透明度
     private final float bgAlpha;
 
+    private final boolean clippingEnabled;
+
+    public boolean isClippingEnabled() {
+        return clippingEnabled;
+    }
+
     public float getBgAlpha() {
         return bgAlpha;
     }
+
     public boolean isFocusable() {
         return focusable;
     }
@@ -448,7 +455,13 @@ public class SelectSettings {
         //背景透明度
         private float bgAlpha = 0.6f;
 
+        private boolean clippingEnabled = false;
+
         public Builder() {
+        }
+        public Builder clippingEnabled(boolean clippingEnabled) {
+            this.clippingEnabled = clippingEnabled;
+            return this;
         }
 
         public Builder bgAlpha(float bgAlpha) {
@@ -839,5 +852,6 @@ public class SelectSettings {
         listDivider = builder.listDivider;
         listDividerHeight= builder.listDividerHeight;
         bgAlpha = builder.bgAlpha;
+        clippingEnabled = builder.clippingEnabled;
     }
 }

@@ -125,8 +125,7 @@ public class PopupSelect {
                 pWindow.setInputMethodMode(selectSettings.getInputMethodMode());
                 pWindow.setSoftInputMode(selectSettings.getSoftInputMode());
                 pWindow.setBackgroundDrawable(new BitmapDrawable());
-
-
+                pWindow.setClippingEnabled(selectSettings.isClippingEnabled());
                 pWindow.showAtLocation(window.getDecorView(), Gravity.CENTER, 0, 0);
                 pWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override

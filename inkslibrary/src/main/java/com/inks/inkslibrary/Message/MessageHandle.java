@@ -9,59 +9,16 @@ import com.inks.inkslibrary.Utils.L;
 
 import java.util.ArrayList;
 
-/**
- * Created by inks on 2018/8/3 0003.
- *             private MessageHandle messageHandle;
- *             messageHandle = new MessageHandle(mHandler, 10086, 10087);
- *
- *             SendDataBen sendDataBen = new SendDataBen();
- *             sendDataBen.sendData = sendBytes;
- *             sendDataBen.isAll = false;
- *             sendDataBen.mac=mac;
- *             //添加到队列
- *             MessageBean messageBean = new MessageBean();
- *             messageBean.setCommandID(id);
- *             messageBean.setIndex(index);
- *             messageBean.setFlag(id + "");
- *             messageBean.setFlag2(id + "");
- *             messageBean.setDatas(sendDataBen);
- *             messageBean.setRepeatTimes(1);
- *             messageBean.setDeleteSame(true);
- *             messageHandle.addMessage(messageBean);
- *             case 999:
- *             if (recive) {
- *               messageHandle.activityReply(true);
- *             } else {
- *               messageHandle.activityReply(false);
- *             }
- *            case 10086://需要发送的消息
- *                     sendIndex = msg.arg1;
- *                     sendID = msg.arg2;
- *                     isUsed = false;
- *                     recive = false;
- *                     SendDataBen sendDateBen = (SendDataBen) msg.obj;
- *                     if(sendDateBen.isAll){
- *                         mainApplication.getService().writeAllCharacteristic(sendDateBen.sendData);
- *                     }else{
- *                         mainApplication.getService().writeCharacteristic(sendDateBen.mac,sendDateBen.sendData);
- *                     }
- *                     mHandler.removeMessages(999);
- *                     mHandler.sendEmptyMessageDelayed(999, Datas.waitReplyTime);
- *                     break;
- *
- *                     case 10087://失败
- *
- *                     break;
- *
- */
+
 public class MessageHandle {
 
     private boolean atWork = false;
     private Handler handler;
     private int what;
     private int failWhat;
-    private int lastC;
     private ArrayList<MessageBean> handleArrayList = new ArrayList<>();
+    private MessageBean lastC;
+
     Message m;
 
     public MessageHandle(Handler handler, int what, int failWhat) {
@@ -76,12 +33,12 @@ public class MessageHandle {
             for (int i = 0; i < handleArrayList.size(); i++) {
                 if (handleArrayList.get(i).getFlag2().equals(messageBean.getFlag2())) {
                     if(i ==0){
-                       if(handleArrayList.get(0).isProcessing()){//正在运行，不删除
-                           flag = false;
-                       }else{
-                           handleArrayList.remove(i);
-                           i--;
-                       }
+                        if(handleArrayList.get(0).isProcessing()){//正在运行，不删除
+                            flag = false;
+                        }else{
+                            handleArrayList.remove(i);
+                            i--;
+                        }
                     }else{
                         handleArrayList.remove(i);
                         i--;
@@ -105,20 +62,18 @@ public class MessageHandle {
         sendMessage();
     }
 
+
     private void sendMessage() {
         if (!atWork) {
             if (handleArrayList.size() > 0) {
                 atWork = true;
                 m = handler.obtainMessage();
                 m.what = what;
-                m.obj = handleArrayList.get(0).getDatas();
-                m.arg1 = handleArrayList.get(0).getIndex();
-                m.arg2 = handleArrayList.get(0).getCommandID();
-                lastC =  handleArrayList.get(0).getCommandID();
+                m.obj = handleArrayList.get(0);
+                lastC =  handleArrayList.get(0);
                 handler.sendMessage(m);
                 handleArrayList.get(0).setProcessing(true);
                 handleArrayList.get(0).setRepeatTimes(handleArrayList.get(0).getRepeatTimes() - 1);
-                L.e(handleArrayList.get(0).getFlag() + ":");
                 L.e("还有次数：" + handleArrayList.get(0).getRepeatTimes());
 //                L.e(handleArrayList.get(0).getFlag() + ":" + StringAndByteUtils.printHexByte(handleArrayList.get(0).getDatas()));
                 if (handleArrayList.get(0).getRepeatTimes() < 1) {
@@ -127,6 +82,7 @@ public class MessageHandle {
             }
         }
     }
+
 
     //收到回信，开始发送下一次消息
     public void activityReply(boolean b) {
@@ -149,16 +105,19 @@ public class MessageHandle {
 
     }
 
-    private void sendFailMessage() {
-                m = handler.obtainMessage();
-                m.what = failWhat;
-                m.arg1 =lastC;
-                handler.sendMessage(m);
-    }
 
+    private void sendFailMessage() {
+        m = handler.obtainMessage();
+        m.what = failWhat;
+        m.obj =lastC;
+        handler.sendMessage(m);
+    }
 
     public void removeAll(){
         handleArrayList.clear();
         atWork = false;
     }
+
+
+
 }

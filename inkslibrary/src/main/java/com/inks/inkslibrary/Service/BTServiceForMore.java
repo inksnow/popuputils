@@ -19,10 +19,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 import android.widget.SimpleExpandableListAdapter;
-
 import com.inks.inkslibrary.Utils.L;
-import com.inks.inkslibrary.Utils.StringAndByteUtils;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,119 +29,111 @@ import java.util.UUID;
 public class BTServiceForMore extends Service {
 
     private final static String TAG = BTServiceForMore.class.getSimpleName();
-    public final static String ACTION_GATT_CONNECTED = "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
-    public final static String ACTION_GATT_DISCONNECTED = "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED";
-    public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED";
-    public final static String ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
-    public final static String EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA";
-    public final static String ALL_DATA = "com.example.bluetooth.le.ALL_DATA";
 
+    //连接成功
+    public final static String LINK_SUCCESS = "LINK_SUCCESS";
+    //连接失败
+    public final static String LINK_FAIL = "LINK_FAIL";
+    //断开连接
+    public final static String DIS_LINK = "DIS_LINK";
+    //连接时未找打该设备，可能已被移除
+    public final static String CONNECT_NOT_FOUND = "CONNECT_NOT_FOUND";
+    //连接成功，但未找到该设备，可能已被移除，断开连接
+    public final static String LINK_SUCCESS_NOT_FOUND = "LINK_SUCCESS_NOT_FOUND";
+    //连接失败，但未找到该设备，可能已被移除，断开连接
+    public final static String LINK_FAIL_NOT_FOUND = "LINK_FAIL_NOT_FOUND";
+
+
+    public final static String ACTION_GATT_CONNECTED = "ACTION_GATT_CONNECTED";
+    public final static String ACTION_GATT_DISCONNECTED = "ACTION_GATT_DISCONNECTED";
+    public final static String ACTION_GATT_SERVICES_DISCOVERED = "ACTION_GATT_SERVICES_DISCOVERED";
+    public final static String ACTION_DATA_AVAILABLE = "ACTION_DATA_AVAILABLE";
+    public final static String EXTRA_DATA = "EXTRA_DATA";
     private BluetoothManager mBluetoothManager;
     private BluetoothAdapter mBluetoothAdapter;
-
     private ArrayList<BTforServiceBean> btArrayList = new ArrayList<>();
-
-
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics =
             new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
     private final String LIST_NAME = "NAME";
     private final String LIST_UUID = "UUID";
-
-    private int maxReconnection = 2;
-    private int nowReconnection = 0;
+    private int maxReconnection = 1;
+    private int nowReconnection = 1;
     private String nowReconnectionMac = "";
-
+    //最大连接个数
+    private int maxDevice = 4;
+    //超时时间
+    private int timeout = 10 * 1000;
 
 
     private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
-        @SuppressLint("MissingPermission")
+
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-            String intentAction;
-            L.e("onConnectionStateChange"+gatt.getDevice().getAddress()+"   status:"+status+"    newState:"+newState);
+            L.e("onConnectionStateChange" + gatt.getDevice().getAddress() + "   status:" + status + "    newState:" + newState);
             if (newState == BluetoothProfile.STATE_CONNECTED) {
-                nowReconnection = 0;
-                nowReconnectionMac="";
-                intentAction = ACTION_GATT_CONNECTED;
+                //连接成功
+                L.e("连接成功onConnectionStateChange");
 
+                if (nowReconnectionMac.isEmpty()) {
+                    //现在没有正在连接，却收到了连接成功？
+                    L.e("BUG");
+                }
                 boolean addFlag = false;
                 for (int i = 0; i < btArrayList.size(); i++) {
                     if (btArrayList.get(i).getMac().equals(gatt.getDevice().getAddress())) {
                         btArrayList.get(i).setState(1);
+                        gatt.discoverServices();
+                        if(nowReconnectionMac.equals(gatt.getDevice().getAddress())){
+                            handler.removeMessages(2);
+                            Message message = Message.obtain();
+                            message.what = 2;
+                            message.obj = nowReconnectionMac;
+                            handler.sendMessageDelayed(message, 2);
+                        }else{
+                            L.e("列表中有该设备，但是现在正在连的不是它");
+                        }
+                        addFlag = true;
+                        break;
+
+                    }
+                }
+
+                if(!addFlag){
+                    //没有添加或已被移除
+                    broadcastUpdate(LINK_SUCCESS_NOT_FOUND,gatt.getDevice().getAddress());
+                    gatt.disconnect();
+                    gatt.close();
+
+                }
+            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                //连接失败
+                boolean addFlag = false;
+                for (int i = 0; i < btArrayList.size(); i++) {
+                    if (btArrayList.get(i).getMac().equals(gatt.getDevice().getAddress())) {
+                        btArrayList.get(i).setState(0);
+                        if(nowReconnectionMac.equals(gatt.getDevice().getAddress())){
+                            L.e("该地址正在连接中，等待handler判断连接状态");
+                        }else{
+                            L.e("设备断开连接");
+                            broadcastUpdate(DIS_LINK,gatt.getDevice().getAddress());
+                            gatt.disconnect();
+                            gatt.close();
+                        }
                         addFlag = true;
                         break;
                     }
                 }
-                if (!addFlag) {
-                    BTforServiceBean bTforServiceBean = new BTforServiceBean();
-                    bTforServiceBean.setState(1);
-                    bTforServiceBean.setGatt(gatt);
-                    bTforServiceBean.setName(gatt.getDevice().getName());
-                    bTforServiceBean.setMac(gatt.getDevice().getAddress());
-                    btArrayList.add(bTforServiceBean);
-                }
-                broadcastUpdate(intentAction, gatt.getDevice().getAddress(), gatt.getDevice().getName());
-                Log.i(TAG, "Connected to GATT server.");
-                // Attempts to discover services after successful connection.
-                Log.i(TAG, "Attempting to start service discovery:" +
-                        gatt.discoverServices());
+                if(!addFlag){
+                    //没有添加或已被移除
+                    broadcastUpdate(LINK_FAIL_NOT_FOUND,gatt.getDevice().getAddress());
+                    gatt.disconnect();
+                    gatt.close();
 
-            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-
-                if(status!=0){
-                    //  重连
-                    boolean stateFlag = false;//是否正在重连
-                    for (int i = 0; i < btArrayList.size(); i++) {
-                        if (btArrayList.get(i).getMac().equals(gatt.getDevice().getAddress())) {
-                            if(btArrayList.get(i).getState()==2){
-                                //正在连接中，重连
-                                stateFlag = true;
-                                break;
-                            }
-                        }
-                    }
-                    if((nowReconnection<maxReconnection) && stateFlag){
-                        nowReconnection ++;
-                        L.e("onConnectionStateChange第"+nowReconnection+"次重连"+gatt.getDevice().getAddress());
-                        nowReconnectionMac = gatt.getDevice().getAddress();
-                        L.e(gatt.getDevice().getName()+"    "+nowReconnectionMac);
-                        gatt.close();
-                        for (int i = 0; i < btArrayList.size(); i++) {
-                            if (btArrayList.get(i).getMac().equals(gatt.getDevice().getAddress())) {
-                                btArrayList.get(i).setState(0);
-                                btArrayList.get(i).setGatt(null);
-                                btArrayList.remove(i);
-                                break;
-                            }
-                        }
-                        handler.removeMessages(100);
-                        handler.sendEmptyMessageDelayed(100,5*1000);
-                        return ;
-                    }else{
-                        //连接超过3次
-                        nowReconnection = 0;
-                        nowReconnectionMac="";
-                        L.e("onConnectionStateChange超过3次或不需要重连"+gatt.getDevice().getAddress());
-                    }
                 }
-                intentAction = ACTION_GATT_DISCONNECTED;
-                for (int i = 0; i < btArrayList.size(); i++) {
-                    if (btArrayList.get(i).getMac().equals(gatt.getDevice().getAddress())) {
-                        btArrayList.get(i).setState(0);
-                        btArrayList.get(i).getGatt().disconnect();
-                        btArrayList.get(i).getGatt().close();
-                        btArrayList.get(i).setGatt(null);
-                        btArrayList.remove(i);
-                        break;
-                    }
-                }
-                L.e("连接失败");
-                Log.i(TAG, "Disconnected from GATT server.");
-                broadcastUpdate(intentAction, gatt.getDevice().getAddress(), gatt.getDevice().getName());
             }
+
         }
 
-        @SuppressLint("MissingPermission")
         @Override
         public void onServicesDiscovered(BluetoothGatt gatt, int status) {
             L.e("onServicesDiscovered");
@@ -152,65 +141,57 @@ public class BTServiceForMore extends Service {
                 Log.e(TAG, "onServicesDiscovered received: " + status);
                 //broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED,gatt.getDevice().getAddress());
                 displayGattServices(gatt.getServices());
-
                 int number = 0;
                 boolean addFlag = false;
                 for (int i = 0; i < btArrayList.size(); i++) {
                     if (btArrayList.get(i).getMac().equals(gatt.getDevice().getAddress())) {
-                        btArrayList.get(i).setState(1);
                         number = i;
                         addFlag = true;
                         break;
                     }
                 }
-                if (!addFlag) {
-                    BTforServiceBean bTforServiceBean = new BTforServiceBean();
-                    bTforServiceBean.setState(1);
-                    bTforServiceBean.setGatt(gatt);
-                    bTforServiceBean.setName(gatt.getDevice().getName());
-                    bTforServiceBean.setMac(gatt.getDevice().getAddress());
-                    btArrayList.add(bTforServiceBean);
-                    number = btArrayList.size() - 1;
-                }
+                if(addFlag){
 
-
-                if (mGattCharacteristics != null) {
-                    L.e("mGattCharacteristics:"+mGattCharacteristics.size());
-                    BluetoothGattCharacteristic characteristic = null;
-                    boolean flag = false;
-                    for (int i = 0; i < mGattCharacteristics.size() && !flag; i++) {
-                        L.e("mGattCharacteristics(i):"+mGattCharacteristics.get(i).size());
-                        for (int k = 0; k < mGattCharacteristics.get(i).size(); k++) {
-                            characteristic = mGattCharacteristics.get(i).get(k);
-                            L.e(characteristic.getUuid().toString());
-                            if (SampleGattAttributes.READ.equals(characteristic.getUuid()) || SampleGattAttributes.READ2.equals(characteristic.getUuid())) {
-                                flag = true;
-                                L.e("找到读ID");
-                                break;
-
+                    if (mGattCharacteristics != null) {
+                        L.i("mGattCharacteristics:" + mGattCharacteristics.size());
+                        BluetoothGattCharacteristic characteristic = null;
+                        boolean flag = false;
+                        for (int i = 0; i < mGattCharacteristics.size() && !flag; i++) {
+                            L.i("mGattCharacteristics(i):" + mGattCharacteristics.get(i).size());
+                            for (int k = 0; k < mGattCharacteristics.get(i).size(); k++) {
+                                characteristic = mGattCharacteristics.get(i).get(k);
+                                L.i(characteristic.getUuid().toString());
+                                if (SampleGattAttributes.READ.equals(characteristic.getUuid()) || SampleGattAttributes.READ2.equals(characteristic.getUuid())) {
+                                    flag = true;
+                                    L.i("找到读ID");
+                                    break;
+                                }
                             }
                         }
-                    }
-                    boolean writeflag = false;
-                    for (int i = 0; i < mGattCharacteristics.size() && !writeflag; i++) {
-                        for (int k = 0; k < mGattCharacteristics.get(i).size(); k++) {
-                            if (SampleGattAttributes.WRITE.equals(mGattCharacteristics.get(i).get(k).getUuid()) || SampleGattAttributes.WRITE2.equals(mGattCharacteristics.get(i).get(k).getUuid())) {
-                                btArrayList.get(number).setWriteCharacteristic(mGattCharacteristics.get(i).get(k));
-                                writeflag = true;
-                                L.e("找到写ID");
-                                break;
+                        boolean writeflag = false;
+                        for (int i = 0; i < mGattCharacteristics.size() && !writeflag; i++) {
+                            for (int k = 0; k < mGattCharacteristics.get(i).size(); k++) {
+                                if (SampleGattAttributes.WRITE.equals(mGattCharacteristics.get(i).get(k).getUuid()) || SampleGattAttributes.WRITE2.equals(mGattCharacteristics.get(i).get(k).getUuid())) {
+                                    btArrayList.get(number).setWriteCharacteristic(mGattCharacteristics.get(i).get(k));
+                                    writeflag = true;
+                                    L.i("找到写ID");
+                                    break;
+                                }
                             }
                         }
-                    }
-                    L.e("UUID结束");
-                    final int charaProp = characteristic.getProperties();
+                        L.e("UUID结束");
+                        final int charaProp = characteristic.getProperties();
 
-                    if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
-                        setCharacteristicServerNotification(gatt, characteristic, true);
+                        if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+                            setCharacteristicServerNotification(gatt, characteristic, true);
+                        }
+                    } else {
+                        L.e("mGattCharacteristics == null");
                     }
-                } else {
-                    L.e("mGattCharacteristics == null");
+                }else{
+                    L.e("UUID结束----未添加该地址或已被移除");
                 }
+
             } else {
                 Log.e(TAG, "onServicesDiscovered received: " + status);
             }
@@ -235,10 +216,9 @@ public class BTServiceForMore extends Service {
 
     };
 
-    private void broadcastUpdate(final String action, String mac, String name) {
+    private void broadcastUpdate(final String action, String mac) {
         final Intent intent = new Intent(action);
         intent.putExtra("MAC", mac);
-        intent.putExtra("NAME", name);
         sendBroadcast(intent);
     }
 
@@ -251,108 +231,112 @@ public class BTServiceForMore extends Service {
             final StringBuilder stringBuilder = new StringBuilder(data.length);
             for (byte byteChar : data)
                 stringBuilder.append(String.format("%02X ", byteChar));
-
-            String dataString = stringBuilder.toString();
-            byte[] dataBytes = StringAndByteUtils.stringToBytes(dataString);
-            //收到的全部数据
-            intent.putExtra(ALL_DATA, dataString);
+            intent.putExtra(EXTRA_DATA, stringBuilder.toString());
             intent.putExtra("MAC", mac);
             Log.w(TAG, stringBuilder.toString());
             sendBroadcast(intent);
-            //按协议收到的
-//            if((dataBytes[0]&0XFF)==0X3B){
-//                int dataLength =  dataBytes[1]&0XFF+(dataBytes[2]&0XFF);
-//                if(dataString.length()>(dataLength*2)){//有2包数据（粘包）
-//                    L.e("有2包数据（粘包）");
-//                    String data1 = dataString.substring(0,dataLength*2);
-//                    String data2 = dataString.substring(dataLength*2);
-//                    intent.putExtra(EXTRA_DATA, data1);
-//                    intent.putExtra("MAC", mac);
-//                    Log.w(TAG, stringBuilder.toString());
-//                    sendBroadcast(intent);
-//                    intent.putExtra(EXTRA_DATA, data2);
-//                    intent.putExtra("MAC", mac);
-//                    Log.w(TAG, stringBuilder.toString());
-//                    sendBroadcast(intent);
-//                }else{
-//                    //只有一包
-//                    L.e("只有一包");
-//                    intent.putExtra(EXTRA_DATA, stringBuilder.toString());
-//                    intent.putExtra("MAC", mac);
-//                    Log.w(TAG, stringBuilder.toString());
-//                    sendBroadcast(intent);
-//                }
-//            }
         }
     }
 
 
-    @SuppressLint("MissingPermission")
-    public boolean connect(final String address) {
-
-        int linkNumber = 0;
+    public boolean connectWithMac(String address) {
+        boolean addFlag = false;
+        int flagIndex = 0;
         for (int i = 0; i < btArrayList.size(); i++) {
-            if (btArrayList.get(i).getState() == 1) {
-                linkNumber++;
+            if (btArrayList.get(i).getMac().equals(address)) {
+                addFlag = true;
+                flagIndex = i;
+                break;
             }
         }
-
-        if (linkNumber > 4) {
-            final Intent intent = new Intent("LINK_EXCESS_FOUR");
-            sendBroadcast(intent);
-
+        if (!addFlag) {
+            if (btArrayList.size() < maxDevice) {
+                //添加
+                BTforServiceBean bTforServiceBean = new BTforServiceBean();
+                bTforServiceBean.setMac(address);
+                bTforServiceBean.setState(0);
+                bTforServiceBean.setGatt(null);
+                btArrayList.add(bTforServiceBean);
+                flagIndex = btArrayList.size() - 1;
+            }else{
+                //已经超过个数了
+                L.e("列表已上限");
+                return false;
+            }
+        }
+        if(nowReconnectionMac.isEmpty()){
+            //没有正在连接的
+            if (btArrayList.get(flagIndex).getState() == 0) {
+                //未连接，可以去连接
+                btArrayList.get(flagIndex).setState(2);
+                nowReconnection = 1;
+                return connect(btArrayList.get(flagIndex).getMac());
+            } else {
+                L.e("已连接或连接中");
+                return false;
+            }
+        }else{
+            L.e("已有其他设备正在连接中");
             return false;
+
         }
 
+    }
+
+    @SuppressLint("MissingPermission")
+    private boolean connect(String address) {
 
         if (mBluetoothAdapter == null || address == null) {
             Log.e(TAG, "BluetoothAdapter not initialized or unspecified address.");
             return false;
         }
-
         final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         if (device == null) {
             Log.e(TAG, "Device not found.  Unable to connect.");
             return false;
         }
 
-        int number = 0;
         boolean addFlag = false;
+        int flagIndex = 0;
         for (int i = 0; i < btArrayList.size(); i++) {
             if (btArrayList.get(i).getMac().equals(address)) {
-                btArrayList.get(i).setState(2);
-                number = i;
                 addFlag = true;
+                flagIndex = i;
                 break;
             }
         }
-        if (!addFlag) {
-            BTforServiceBean bTforServiceBean = new BTforServiceBean();
-            bTforServiceBean.setState(2);
-            bTforServiceBean.setMac(address);
-            bTforServiceBean.setGatt(null);
-            btArrayList.add(bTforServiceBean);
-            number = btArrayList.size() - 1;
-        }
-        if (btArrayList.get(number).getGatt() == null) {
-            BluetoothGatt mBluetoothGatt;
-            mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
-            btArrayList.get(number).setGatt(mBluetoothGatt);
-            btArrayList.get(number).setName(device.getName());
-        } else {
-            if (btArrayList.get(number).getGatt().connect()) {
-                btArrayList.get(number).setName(device.getName());
+
+        if (addFlag) {
+            if (btArrayList.get(flagIndex).getGatt() != null) {
+                btArrayList.get(flagIndex).getGatt().disconnect();
+                handler.removeMessages(1);
+                Message message = Message.obtain();
+                message.what = 1;
+                message.obj = address;
+                handler.sendMessageDelayed(message, 3000);
                 return true;
             } else {
-                return false;
+                BluetoothGatt mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
+                btArrayList.get(flagIndex).setGatt(mBluetoothGatt);
+                btArrayList.get(flagIndex).setName(device.getName());
+                L.e(" Trying to create a new connection." + address + ">>>>第" + nowReconnection + "次连接");
+                nowReconnection++;
+                nowReconnectionMac = address;
+                handler.removeMessages(2);
+                Message message = Message.obtain();
+                message.what = 2;
+                message.obj = address;
+                handler.sendMessageDelayed(message, timeout);
+                return true;
             }
+        } else {
+            Log.e(TAG, "connect 未发现该设备.");
+            return false;
         }
-        Log.e(TAG, "Trying to create a new connection.");
-        return true;
     }
 
+
     public void writeCharacteristic(String mac, byte[] bytes) {
-        L.e(mac + ":" + StringAndByteUtils.bytesToHexString(bytes));
 
         for (int i = 0; i < btArrayList.size(); i++) {
             if (btArrayList.get(i).getMac().equals(mac) && btArrayList.get(i).getState() == 1) {
@@ -361,11 +345,11 @@ public class BTServiceForMore extends Service {
                     return;
                 }
                 boolean flag = false;
-                try{
+                try {
                     btArrayList.get(i).getWriteCharacteristic().setValue(bytes);
                     flag = btArrayList.get(i).getGatt().writeCharacteristic(btArrayList.get(i).getWriteCharacteristic());
                     Log.e(TAG, "           send flag:  " + flag);
-                }catch (Exception e){
+                } catch (Exception e) {
                     L.e("writeCharacteristic失败");
                     L.e(e.toString());
                 }
@@ -390,7 +374,7 @@ public class BTServiceForMore extends Service {
             characteristic.setValue(bytes);
             flag = gatt.writeCharacteristic(characteristic);
             Log.e(TAG, "           send flag:  " + flag);
-        }catch (Exception e){
+        } catch (Exception e) {
             L.e("writeCharacteristic失败");
             L.e(e.toString());
         }
@@ -407,13 +391,12 @@ public class BTServiceForMore extends Service {
                     return;
                 }
                 boolean flag = false;
-                try{
-                    L.e(btArrayList.get(i).getMac() + "_发送：" + StringAndByteUtils.bytesToHexString(bytes));
+                try {
                     btArrayList.get(i).getWriteCharacteristic().setValue(bytes);
                     flag = btArrayList.get(i).getGatt().writeCharacteristic(btArrayList.get(i).getWriteCharacteristic());
                     Log.e(TAG, "           send flag:  " + flag);
 
-                }catch (Exception e){
+                } catch (Exception e) {
                     L.e("writeCharacteristic失败");
                     L.e(e.toString());
                 }
@@ -423,7 +406,6 @@ public class BTServiceForMore extends Service {
             }
         }
     }
-
 
     public ArrayList<String> getLinkBt() {
         ArrayList<String> linkBt = new ArrayList<>();
@@ -435,7 +417,6 @@ public class BTServiceForMore extends Service {
         return linkBt;
     }
 
-
     public ArrayList<String> getAllBt() {
         ArrayList<String> allBt = new ArrayList<>();
         for (int i = 0; i < btArrayList.size(); i++) {
@@ -443,7 +424,8 @@ public class BTServiceForMore extends Service {
         }
         return allBt;
     }
-    public ArrayList<BTBean> getBTBean(){
+
+    public ArrayList<BTBean> getBTBean() {
         ArrayList<BTBean> bTBean = new ArrayList<>();
         for (int i = 0; i < btArrayList.size(); i++) {
             if (btArrayList.get(i).getState() == 1) {
@@ -457,10 +439,18 @@ public class BTServiceForMore extends Service {
     }
 
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // callback(startId);
+        return super.onStartCommand(intent, flags, startId);
+    }
+
 
     @Override
     public IBinder onBind(Intent intent) {
+        L.e("服务绑定");
         return mBinder;
+
     }
 
     @Override
@@ -470,17 +460,18 @@ public class BTServiceForMore extends Service {
         return super.onUnbind(intent);
     }
 
-    public void removeHandler(){
-        handler.removeMessages(100);
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        L.e("服务onCreate");
     }
 
     public void close(String mac) {
-        handler.removeMessages(100);
-        nowReconnection = 0;
         for (int i = 0; i < btArrayList.size(); i++) {
             if (btArrayList.get(i).getMac().equals(mac)) {
                 if (btArrayList.get(i).getGatt() != null) {
                     btArrayList.get(i).getGatt().close();
+                    btArrayList.get(i).setGatt(null);
                 }
                 // btArrayList.get(i).setGatt(null);
                 btArrayList.remove(i);
@@ -490,11 +481,11 @@ public class BTServiceForMore extends Service {
     }
 
     public void closeAll() {
-        handler.removeMessages(100);
-        nowReconnection = 0;
+        L.e("closeAll:");
         for (int i = 0; i < btArrayList.size(); i++) {
             if (btArrayList.get(i).getGatt() != null) {
                 btArrayList.get(i).getGatt().close();
+                btArrayList.get(i).setGatt(null);
             }
             // btArrayList.get(i).setGatt(null);
         }
@@ -502,53 +493,103 @@ public class BTServiceForMore extends Service {
     }
 
 
-    @SuppressLint("MissingPermission")
-    public boolean disconnect(String mac) {
-
-        if (mBluetoothAdapter.getState() == BluetoothAdapter.STATE_OFF) {
-            return false;
-        } else {
-            handler.removeMessages(100);
-            nowReconnection = 0;
-            for (int i = 0; i < btArrayList.size(); i++) {
-                if (btArrayList.get(i).getMac().equals(mac)) {
-                    if (mBluetoothAdapter == null || btArrayList.get(i).getGatt() == null) {
-                        Log.w(TAG, "mBluetoothGatt=null");
-                        return false;
-                    }
-                    btArrayList.get(i).getGatt().disconnect();
-                    //  btArrayList.get(i).setState(3);
-                    break;
-                }
-            }
-            return true;
-        }
-    }
-
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
-                case 100:
-                    L.e("开始重连："+nowReconnectionMac);
-                    connect(nowReconnectionMac);
+            switch (msg.what) {
+                case 1://如果GATT不等于NULL，dis 3秒后close；
+                    String mac = (String) msg.obj;
+                    for (int i = 0; i < btArrayList.size(); i++) {
+                        if (btArrayList.get(i).getMac().equals(mac)) {
+                            btArrayList.get(i).getGatt().close();
+                            btArrayList.get(i).setGatt(null);
+                            connect(mac);
+                            break;
+                        }
+                    }
                     break;
+                case 2://开始连接，超时时间后可再次连接继续
+                    mac = (String) msg.obj;
+                    boolean addFlag = false;
+                    for (int i = 0; i < btArrayList.size(); i++) {
+                        if (btArrayList.get(i).getMac().equals(mac)) {
+                            if (btArrayList.get(i).getState() == 1) {
+                                //已连接
+                                nowReconnectionMac="";
+                                nowReconnection=1;
+                                broadcastUpdate(LINK_SUCCESS, mac);
+                            } else {
+                                if (nowReconnection < maxReconnection) {
+                                    //未连接，继续重连
+                                    connect(mac);
+                                } else {
+                                    btArrayList.get(i).setState(0);
+                                    btArrayList.get(i).getGatt().disconnect();
+                                    nowReconnectionMac="";
+                                    nowReconnection=1;
+                                    //已经超过次数了,但是没连接成功
+                                    broadcastUpdate(LINK_FAIL, mac);
 
+                                }
+                            }
+                            addFlag = true;
+                            break;
+                        }
+                    }
+                    if (!addFlag) {
+                        //没有找到该设备
+                        nowReconnectionMac="";
+                        nowReconnection=1;
+                        broadcastUpdate(CONNECT_NOT_FOUND, mac);
+                    }
+                    break;
             }
         }
     };
-
-
 
     private final IBinder mBinder = new LocalBinder();
 
     public class LocalBinder extends Binder {
         public BTServiceForMore getService() {
+            L.e(" return BTServiceForMore.this;");
             return BTServiceForMore.this;
         }
+    }
+
+    public int getMaxReconnection() {
+        return maxReconnection;
+    }
+
+    public void setMaxReconnection(int maxReconnection) {
+        this.maxReconnection = maxReconnection;
+    }
+
+    public int getNowReconnection() {
+        return nowReconnection;
+    }
+
+
+    public String getNowReconnectionMac() {
+        return nowReconnectionMac;
+    }
+
+    public int getMaxDevice() {
+        return maxDevice;
+    }
+
+    public void setMaxDevice(int maxDevice) {
+        this.maxDevice = maxDevice;
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
     }
 
     public boolean initialize() {
@@ -674,3 +715,103 @@ public class BTServiceForMore extends Service {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+/**
+    private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            final String MAC = intent.getStringExtra("MAC");
+
+//            //连接成功
+//            public final static String LINK_SUCCESS = "LINK_SUCCESS";
+//            //连接失败
+//            public final static String LINK_FAIL = "LINK_FAIL";
+//            //断开连接
+//            public final static String DIS_LINK = "DIS_LINK";
+//            //连接时未找打该设备，可能已被移除
+//            public final static String CONNECT_NOT_FOUND = "CONNECT_NOT_FOUND";
+//            //连接成功，但未找到该设备，可能已被移除，断开连接
+//            public final static String LINK_SUCCESS_NOT_FOUND = "LINK_SUCCESS_NOT_FOUND";
+//            //连接失败，但未找到该设备，可能已被移除，断开连接
+//            public final static String LINK_FAIL_NOT_FOUND = "LINK_FAIL_NOT_FOUND";
+
+            L.i(MAC + "");
+            L.i(action);
+            if (BTServiceForMore.LINK_SUCCESS.equals(action)) {
+                L.e("BroadcastReceiver连接成功");
+
+            } else if (BTServiceForMore.LINK_FAIL.equals(action)) {
+                L.e("BroadcastReceiver连接失败");
+
+            } else if (BTServiceForMore.DIS_LINK.equals(action)) {
+                L.e("BroadcastReceiver断开连接");
+
+            } else if (BTServiceForMore.CONNECT_NOT_FOUND.equals(action)) {
+                L.e("BroadcastReceiverCONNECT_NOT_FOUND 未找到该地址");
+
+            } else if (BTServiceForMore.LINK_SUCCESS_NOT_FOUND.equals(action)) {
+                L.e("BroadcastReceiverLINK_SUCCESS_NOT_FOUND 未找到该地址");
+
+            } else if (BTServiceForMore.LINK_FAIL_NOT_FOUND.equals(action)) {
+                L.e("BroadcastReceiverLINK_FAIL_NOT_FOUND 未找到该地址");
+            } else if (BTServiceForMore.ACTION_DATA_AVAILABLE.equals(action)) {
+                //收到数据
+                L.e("BroadcastReceiver收到数据");
+            }
+        }
+    };
+
+
+
+
+
+ private static IntentFilter makeGattUpdateIntentFilter() {
+ final IntentFilter intentFilter = new IntentFilter();
+ intentFilter.addAction(BTServiceForMore.LINK_SUCCESS);
+ intentFilter.addAction(BTServiceForMore.LINK_FAIL);
+ intentFilter.addAction(BTServiceForMore.DIS_LINK);
+ intentFilter.addAction(BTServiceForMore.CONNECT_NOT_FOUND);
+ intentFilter.addAction(BTServiceForMore.LINK_SUCCESS_NOT_FOUND);
+ intentFilter.addAction(BTServiceForMore.LINK_FAIL_NOT_FOUND);
+ intentFilter.addAction(BTServiceForMore.ACTION_DATA_AVAILABLE);
+ return intentFilter;
+ }
+
+
+
+
+
+ BTServiceForMore btServiceForMore;
+ private final ServiceConnection mServiceConnection = new ServiceConnection() {
+@Override
+public void onServiceConnected(ComponentName componentName, IBinder service) {
+btServiceForMore = ((BTServiceForMore.LocalBinder) service).getService();
+
+if (!btServiceForMore.initialize()) {
+Log.e("MainApplication", "Unable to initialize Bluetooth");
+} else {
+Log.e("MainApplication", "服务绑定成功");
+}
+}
+@Override
+public void onServiceDisconnected(ComponentName componentName) {
+Log.e("MainApplication", "服务解除绑定");
+}
+};
+
+
+
+
+
+ */

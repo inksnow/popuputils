@@ -1,13 +1,14 @@
 
 
-[我的个人主页：www.inksnow.ink](www.inksnow.ink)
+[我的个人主页：www.inksnow.ink](https://www.inksnow.ink)
 
 
 效果图：
-![01](https://github.com/inksnow/popuputils/blob/master/11.jpg)  
-![02](https://github.com/inksnow/popuputils/blob/master/22.jpg)  
-![03](https://github.com/inksnow/popuputils/blob/master/001.gif)  
-![04](https://github.com/inksnow/popuputils/blob/master/a1~3.gif)  
+![01](https://github.com/inksnow/popuputils/blob/master/d.gif)  
+![02](https://github.com/inksnow/popuputils/blob/master/11.jpg)  
+![03](https://github.com/inksnow/popuputils/blob/master/22.jpg)  
+![04](https://github.com/inksnow/popuputils/blob/master/001.gif)  
+![05](https://github.com/inksnow/popuputils/blob/master/a1~3.gif)  
 
 使用方法：<br>  
 
@@ -29,7 +30,7 @@ allprojects {
 
 build.gradle (app)中  
 
-添加   implementation 'com.github.inksnow:popuputils:1.0.7'  
+添加   implementation 'com.github.inksnow:popuputils:1.0.9'  
 
 dependencies {  
 
@@ -37,7 +38,7 @@ dependencies {
     
      ......  
      
-    implementation 'com.github.inksnow:popuputils:1.0.7'  
+    implementation 'com.github.inksnow:popuputils:1.0.9'  
     
 }  
 

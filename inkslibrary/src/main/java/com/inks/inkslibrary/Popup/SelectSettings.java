@@ -39,6 +39,7 @@ public class SelectSettings {
     private final boolean showTitleIcon;
     private final Drawable titleIcon;
 
+
     private final boolean showTitleText;
     private final String titleTextStr;
     private final int titleTextColor;

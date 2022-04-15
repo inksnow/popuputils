@@ -1,6 +1,7 @@
 package com.inks.inkslibrary.Popup;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +65,8 @@ public class ListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(GetResId.getId(context, "layout", "popup_select_list"), parent, false); //加载布局
                holder = new ViewHolder();
-            holder.linearLayout = convertView.findViewById(GetResId.getId(context, "id", "popup_select_list"));
+            //holder.linearLayout = convertView.findViewById(GetResId.getId(context, "id", "popup_select_list"));
+            holder.listLayout = convertView.findViewById(GetResId.getId(context, "id", "select_list_layout"));
             holder.textView = convertView.findViewById(GetResId.getId(context, "id", "select_list_text"));
             holder.imageView = convertView.findViewById(GetResId.getId(context, "id", "select_list_select"));
             holder.iconView = convertView.findViewById(GetResId.getId(context, "id", "select_list_icon"));
@@ -72,6 +74,11 @@ public class ListAdapter extends BaseAdapter {
         } else {
              holder = (ViewHolder) convertView.getTag();
         }
+        LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) holder.listLayout.getLayoutParams();
+        linearParams.width = selectSettings.getListLayoutWidth();
+        linearParams.gravity = selectSettings.getListLayoutGravity();
+        holder.listLayout.setLayoutParams(linearParams);
+
         holder.textView.setText(datas.get(position).getText());
         holder.textView.setTextSize(selectSettings.getListTextSize());
         holder.textView.setPadding(selectSettings.getListTextPaddings()[0],
@@ -87,7 +94,7 @@ public class ListAdapter extends BaseAdapter {
 
         if(selectSettings.isShowListSelectImage()){
             holder.imageView.setVisibility(View.VISIBLE);
-            LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) holder.imageView.getLayoutParams();
+             linearParams =(LinearLayout.LayoutParams) holder.imageView.getLayoutParams();
             linearParams.width = selectSettings.getListSelectImageWidth();
             linearParams.height = selectSettings.getListSelectImageHeight();
             holder.imageView.setLayoutParams(linearParams);
@@ -114,7 +121,7 @@ public class ListAdapter extends BaseAdapter {
 
         if(selectSettings.isShowListIcon() &&datas.get(position).getIcon()!=null){
             holder.iconView.setVisibility(View.VISIBLE);
-            LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) holder.iconView.getLayoutParams();
+            linearParams =(LinearLayout.LayoutParams) holder.iconView.getLayoutParams();
             linearParams.width = selectSettings.getListIconWidth();
             linearParams.height = selectSettings.getListIconHeight();
             holder.iconView.setLayoutParams(linearParams);
@@ -130,7 +137,7 @@ public class ListAdapter extends BaseAdapter {
         return convertView;
     }
     private class ViewHolder {
-        LinearLayout linearLayout;
+        LinearLayout linearLayout,listLayout;
         TextView textView;
         ImageView imageView;
         ImageView iconView;

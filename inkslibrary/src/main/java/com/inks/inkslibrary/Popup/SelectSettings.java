@@ -1,8 +1,10 @@
 package com.inks.inkslibrary.Popup;
 
 import android.graphics.drawable.Drawable;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
@@ -66,6 +68,10 @@ public class SelectSettings {
     private final int listIconHeight;
     private final int listIconWidth;
     private final int listTextSize;
+
+    private final int listLayoutWidth;
+    private final int listLayoutGravity;
+
 
     private final int[] listSelectImagePaddings;
     private final int[] listIconPaddings;
@@ -335,6 +341,13 @@ public class SelectSettings {
         return showListIcon;
     }
 
+    public int getListLayoutWidth() {
+        return listLayoutWidth;
+    }
+
+    public int getListLayoutGravity() {
+        return listLayoutGravity;
+    }
 
     public static class Builder {
 
@@ -456,6 +469,12 @@ public class SelectSettings {
         private float bgAlpha = 0.6f;
 
         private boolean clippingEnabled = false;
+
+
+        //list每一条的宽度
+        private int listLayoutWidth  =  ViewGroup.LayoutParams.MATCH_PARENT;
+        //list每一条的居中,只有listLayoutWidth 为wrap_content 时有效
+        private int listLayoutGravity =Gravity.CENTER_HORIZONTAL;
 
         public Builder() {
         }
@@ -767,15 +786,30 @@ public class SelectSettings {
             return this;
         }
 
-        //返回外部对象
+
+
+
+        public Builder listLayoutWidth(int listLayoutWidth){
+            this.listLayoutWidth =listLayoutWidth;
+            return this;
+        }
+
+        public Builder listLayoutGravity(int listLayoutGravity){
+            this.listLayoutGravity = listLayoutGravity;
+            return  this;
+        }
+
+
         public SelectSettings build() {
             return new SelectSettings(this);
         }
-
     }
 
 
     private SelectSettings(Builder builder) {
+        listLayoutWidth = builder.listLayoutWidth;
+        listLayoutGravity = builder.listLayoutGravity;
+
         selectListDataBean = builder.selectListDataBean;
         clickListener = builder.clickListener;
 

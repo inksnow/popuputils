@@ -57,7 +57,6 @@ public class PopupView {
         this.what = what;
         if(view!=null){
             if (!(pWindow != null && pWindow.isShowing())) {
-
                 contentView = inflater.inflate(GetResId.getId(context, "layout", "popup_view"), null);
                 pWindow = new PopupWindow(contentView, viewSettings.getPopupWidth(), viewSettings.getPopupHeight());
                 bgView = contentView.findViewById(GetResId.getId(context, "id", "popup_select"));

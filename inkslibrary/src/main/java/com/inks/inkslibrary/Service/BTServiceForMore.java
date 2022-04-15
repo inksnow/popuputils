@@ -36,7 +36,7 @@ public class BTServiceForMore extends Service {
     public final static String LINK_FAIL = "LINK_FAIL";
     //断开连接
     public final static String DIS_LINK = "DIS_LINK";
-    //连接时未找打该设备，可能已被移除
+    //连接时未找到该设备，可能已被移除
     public final static String CONNECT_NOT_FOUND = "CONNECT_NOT_FOUND";
     //连接成功，但未找到该设备，可能已被移除，断开连接
     public final static String LINK_SUCCESS_NOT_FOUND = "LINK_SUCCESS_NOT_FOUND";
@@ -532,7 +532,6 @@ public class BTServiceForMore extends Service {
                                     nowReconnection=1;
                                     //已经超过次数了,但是没连接成功
                                     broadcastUpdate(LINK_FAIL, mac);
-
                                 }
                             }
                             addFlag = true;
@@ -570,7 +569,6 @@ public class BTServiceForMore extends Service {
     public int getNowReconnection() {
         return nowReconnection;
     }
-
 
     public String getNowReconnectionMac() {
         return nowReconnectionMac;
@@ -665,7 +663,6 @@ public class BTServiceForMore extends Service {
 
     }
 
-
     public List<BluetoothGattService> getSupportedGattServices(String mac) {
 
         for (int i = 0; i < btArrayList.size(); i++) {
@@ -679,7 +676,6 @@ public class BTServiceForMore extends Service {
         }
         return null;
     }
-
 
     public void setCharacteristicServerNotification(BluetoothGatt gatt,
                                                     BluetoothGattCharacteristic characteristic, boolean enabled) {
@@ -712,7 +708,6 @@ public class BTServiceForMore extends Service {
             e.printStackTrace();
         }
     }
-
 
 }
 
@@ -809,9 +804,5 @@ public void onServiceDisconnected(ComponentName componentName) {
 Log.e("MainApplication", "服务解除绑定");
 }
 };
-
-
-
-
 
  */

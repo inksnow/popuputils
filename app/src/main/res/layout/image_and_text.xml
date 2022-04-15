@@ -20,7 +20,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="你好呀,这是一个提示框" />
+        android:text="你好\n\n\n\n呀,这是一\n\n\个提\\n\n示框" />
 
 
 </LinearLayout>

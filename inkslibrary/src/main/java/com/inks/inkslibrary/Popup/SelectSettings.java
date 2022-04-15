@@ -471,7 +471,6 @@ public class SelectSettings {
         private boolean clippingEnabled = false;
 
 
-
         //list每一条的宽度
         private int listLayoutWidth  =  ViewGroup.LayoutParams.MATCH_PARENT;
         //list每一条的居中,只有listLayoutWidth 为wrap_content 时有效

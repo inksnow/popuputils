@@ -1,8 +1,9 @@
-plugins{
-    id 'com.android.library'
-    id 'maven'
-}
+apply plugin: 'com.android.library'
 
+// JitPack Maven
+apply plugin: 'com.github.dcendents.android-maven'
+// Your Group
+group='com.gitee.ink_s'
 
 android {
     compileSdkVersion 28

@@ -1,4 +1,8 @@
-apply plugin: 'com.android.library'
+plugins{
+    id 'com.android.library'
+   // id 'maven'
+}
+
 
 android {
     compileSdkVersion 28
@@ -41,3 +45,20 @@ dependencies {
     implementation 'com.squareup.okio:okio:1.14.0'
     implementation 'com.google.code.gson:gson:2.8.5'
 }
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = 'com.inks.lib' //groupId 随便取
+//                artifactId = 'lib'  //artifactId 随便取
+//                version = '1.0.0'
+//            }
+//        }
+//    }
+//}
+
+
+
+
+

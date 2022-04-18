@@ -29,7 +29,7 @@ allprojects {
 
 build.gradle (app)中  
 
-添加   implementation 'com.github.inksnow:popuputils:1.0.9'  
+添加   implementation 'com.github.inksnow:popuputils:1.0.9'   api 'com.gitee.ink_s:PopupTest:1.0.2'
 
 dependencies {  
 
@@ -37,7 +37,8 @@ dependencies {
     
      ......  
      
-    implementation 'com.github.inksnow:popuputils:1.0.9'  
+    //implementation 'com.github.inksnow:popuputils:1.0.9'  
+    api 'com.gitee.ink_s:PopupTest:1.0.2'
     
 }  
 

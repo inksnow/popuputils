@@ -24,8 +24,9 @@ import java.util.List;
 
 public class PopupSelect {
     public interface onClickListener {
-        public void onChooseBack(List<SelectListDataBean> selectListDataBeans,int what);
-        public void onCancelBack(List<SelectListDataBean> selectListDataBeans,int what);
+        public void onChooseBack(List<SelectListDataBean> selectListDataBeans, int what);
+
+        public void onCancelBack(List<SelectListDataBean> selectListDataBeans, int what);
     }
 
     private View contentView = null;
@@ -60,50 +61,49 @@ public class PopupSelect {
         this.selectSettings = selectSettings;
         this.what = what;
         this.selectListDataBeans = selectSettings.getSelectListDataBean();
-        if(selectListDataBeans!=null){
+        if (selectListDataBeans != null) {
             if (!(pWindow != null && pWindow.isShowing())) {
 
                 contentView = inflater.inflate(GetResId.getId(context, "layout", "popup_select"), null);
-                pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), selectSettings.getPopupHeight());
                 bgView = contentView.findViewById(GetResId.getId(context, "id", "popup_select"));
-                titleView= contentView.findViewById(GetResId.getId(context, "id", "popup_title"));
-                titleIcon= contentView.findViewById(GetResId.getId(context, "id", "popup_title_icon"));
-                titleText= contentView.findViewById(GetResId.getId(context, "id", "popup_title_text"));
-                titleDivision= contentView.findViewById(GetResId.getId(context, "id", "popup_title_division"));
-                listView= contentView.findViewById(GetResId.getId(context, "id", "popup_list"));
-                buttonDivision1= contentView.findViewById(GetResId.getId(context, "id", "popup_list_division"));
-                buttonDivision2= contentView.findViewById(GetResId.getId(context, "id", "popup_button_division"));
-                button1= contentView.findViewById(GetResId.getId(context, "id", "popup_button_1"));
-                button2= contentView.findViewById(GetResId.getId(context, "id", "popup_button_2"));
+                titleView = contentView.findViewById(GetResId.getId(context, "id", "popup_title"));
+                titleIcon = contentView.findViewById(GetResId.getId(context, "id", "popup_title_icon"));
+                titleText = contentView.findViewById(GetResId.getId(context, "id", "popup_title_text"));
+                titleDivision = contentView.findViewById(GetResId.getId(context, "id", "popup_title_division"));
+                listView = contentView.findViewById(GetResId.getId(context, "id", "popup_list"));
+                buttonDivision1 = contentView.findViewById(GetResId.getId(context, "id", "popup_list_division"));
+                buttonDivision2 = contentView.findViewById(GetResId.getId(context, "id", "popup_button_division"));
+                button1 = contentView.findViewById(GetResId.getId(context, "id", "popup_button_1"));
+                button2 = contentView.findViewById(GetResId.getId(context, "id", "popup_button_2"));
                 initView();
 
-                listAdapter = new ListAdapter(context,selectSettings,selectListDataBeans);
+                listAdapter = new ListAdapter(context, selectSettings, selectListDataBeans);
                 listView.setAdapter(listAdapter);
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        L.e("点击了"+position);
+                        L.e("点击了" + position);
 
-                        if(selectSettings.isMultipleSelection()){
+                        if (selectSettings.isMultipleSelection()) {
                             //多选
-                            if(selectListDataBeans.get(position).isChoosed()){
+                            if (selectListDataBeans.get(position).isChoosed()) {
                                 selectListDataBeans.get(position).setChoosed(false);
-                            }else{
+                            } else {
                                 selectListDataBeans.get(position).setChoosed(true);
                             }
                             listAdapter.setData(selectListDataBeans);
-                        }else{
+                        } else {
                             //单选
-                            for(int i = 0;i<selectListDataBeans.size();i++){
+                            for (int i = 0; i < selectListDataBeans.size(); i++) {
                                 selectListDataBeans.get(i).setChoosed(false);
                             }
                             selectListDataBeans.get(position).setChoosed(true);
-                            if(selectSettings.isShowButton2()){
+                            if (selectSettings.isShowButton2()) {
                                 listAdapter.setData(selectListDataBeans);
-                            }else{
+                            } else {
                                 miss();
-                                if(selectSettings.getClickListener()!=null){
-                                    selectSettings.getClickListener().onChooseBack(selectListDataBeans,what);
+                                if (selectSettings.getClickListener() != null) {
+                                    selectSettings.getClickListener().onChooseBack(selectListDataBeans, what);
                                 }
                             }
                         }
@@ -116,9 +116,41 @@ public class PopupSelect {
                 button2.setOnTouchListener(touchListener);
                 button1.setOnClickListener(clickListener);
                 button2.setOnClickListener(clickListener);
+                int animationStyle = GetResId.getId(context, "style", "popup_fade_in_out");
+                switch (selectSettings.getAnimation()){
+                    case popup_top_down:
+                        animationStyle = GetResId.getId(context, "style", "popup_top_down");
+                        break;
+                    case popup_bottom_top:
+                        animationStyle = GetResId.getId(context, "style", "popup_bottom_top");
+                        break;
+                    case popup_left_right:
+                        animationStyle = GetResId.getId(context, "style", "popup_left_right");
+                        break;
+                    case popup_fade_in_out:
+                        animationStyle = GetResId.getId(context, "style", "popup_fade_in_out");
+                        break;
+                }
 
 
-                pWindow.setAnimationStyle(GetResId.getId(context, "style", "popup_fade_in_out"));
+                if(selectSettings.isAutoHeight()){
+                    View listItem = listAdapter.getView(0, null, listView);
+                    listItem.measure(0, 0);
+                    int relheight = listItem.getMeasuredHeight();
+
+                    if(relheight * selectListDataBeans.size()> selectSettings.getPopupHeight()){
+                        pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), selectSettings.getPopupHeight());
+                    } else {
+                        pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), LinearLayout.LayoutParams.WRAP_CONTENT);
+                    }
+
+                }else {
+                    pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), selectSettings.getPopupHeight());
+
+                }
+
+
+                pWindow.setAnimationStyle(animationStyle);
                 pWindow.setTouchable(selectSettings.isTouchable());
                 pWindow.setFocusable(selectSettings.isFocusable());
                 pWindow.setOutsideTouchable(selectSettings.isOutsideTouchable());
@@ -126,7 +158,7 @@ public class PopupSelect {
                 pWindow.setSoftInputMode(selectSettings.getSoftInputMode());
                 pWindow.setBackgroundDrawable(new BitmapDrawable());
                 pWindow.setClippingEnabled(selectSettings.isClippingEnabled());
-                pWindow.showAtLocation(window.getDecorView(), Gravity.CENTER, 0, 0);
+                pWindow.showAtLocation(window.getDecorView(), selectSettings.getPopupGravity(), 0, 0);
                 pWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
@@ -135,10 +167,10 @@ public class PopupSelect {
                     }
                 });
 
-            }else{
+            } else {
                 L.e("已显示");
             }
-        }else{
+        } else {
             L.e("数据为空");
         }
 
@@ -149,18 +181,18 @@ public class PopupSelect {
         public void onClick(View v) {
             miss();
 
-            if(selectSettings.getClickListener()!=null){
-                switch ((int)v.getTag()){
+            if (selectSettings.getClickListener() != null) {
+                switch ((int) v.getTag()) {
                     case 1:
                         L.e("点击了取消");
-                        if(selectSettings.getClickListener()!=null){
-                            selectSettings.getClickListener().onCancelBack(selectListDataBeans,what);
+                        if (selectSettings.getClickListener() != null) {
+                            selectSettings.getClickListener().onCancelBack(selectListDataBeans, what);
                         }
                         break;
                     case 2:
                         L.e("点击了确认");
-                        if(selectSettings.getClickListener()!=null){
-                            selectSettings.getClickListener().onChooseBack(selectListDataBeans,what);
+                        if (selectSettings.getClickListener() != null) {
+                            selectSettings.getClickListener().onChooseBack(selectListDataBeans, what);
                         }
                         break;
                 }
@@ -172,18 +204,18 @@ public class PopupSelect {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
-            switch ((int)v.getTag()){
+            switch ((int) v.getTag()) {
                 case 1:
-                    if(event.getAction()==MotionEvent.ACTION_DOWN){
-                        button1.setTextColor(selectSettings.getButtonTextColor1()-0Xaa000000);
-                    }else if((event.getAction()==MotionEvent.ACTION_UP)||(event.getAction()==MotionEvent.ACTION_OUTSIDE)){
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        button1.setTextColor(selectSettings.getButtonTextColor1() - 0Xaa000000);
+                    } else if ((event.getAction() == MotionEvent.ACTION_UP) || (event.getAction() == MotionEvent.ACTION_OUTSIDE)) {
                         button1.setTextColor(selectSettings.getButtonTextColor1());
                     }
                     break;
                 case 2:
-                    if(event.getAction()==MotionEvent.ACTION_DOWN){
-                        button2.setTextColor(selectSettings.getButtonTextColor2()-0Xaa000000);
-                    }else if((event.getAction()==MotionEvent.ACTION_UP)||(event.getAction()==MotionEvent.ACTION_OUTSIDE)){
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        button2.setTextColor(selectSettings.getButtonTextColor2() - 0Xaa000000);
+                    } else if ((event.getAction() == MotionEvent.ACTION_UP) || (event.getAction() == MotionEvent.ACTION_OUTSIDE)) {
                         button2.setTextColor(selectSettings.getButtonTextColor2());
                     }
                     break;
@@ -193,9 +225,8 @@ public class PopupSelect {
     };
 
 
-
-
-    private void initView(){
+    @SuppressLint("WrongConstant")
+    private void initView() {
 
         backgroundAlpha(selectSettings.getBgAlpha());
 
@@ -213,11 +244,11 @@ public class PopupSelect {
         drawable.setColors(selectSettings.getPopupBg());
         bgView.setBackground(drawable);
 
-        if(selectSettings.isShowTitle()){
+        if (selectSettings.isShowTitle()) {
             titleView.setVisibility(View.VISIBLE);
 
             //背景色及圆角
-             drawable = new GradientDrawable();
+            drawable = new GradientDrawable();
             //形状（矩形）
             drawable.setShape(GradientDrawable.RECTANGLE);
             //渐变样式
@@ -226,17 +257,17 @@ public class PopupSelect {
             drawable.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
             //圆角
             drawable.setCornerRadii(new float[]{selectSettings.getPopupRadius()[0],
-                    selectSettings.getPopupRadius()[1],selectSettings.getPopupRadius()[2],
-                    selectSettings.getPopupRadius()[3],0,0,0,0});
+                    selectSettings.getPopupRadius()[1], selectSettings.getPopupRadius()[2],
+                    selectSettings.getPopupRadius()[3], 0, 0, 0, 0});
             //颜色
             drawable.setColors(selectSettings.getTitleBg());
             titleView.setBackground(drawable);
 
-            if(selectSettings.isShowTitleIcon() && selectSettings.getTitleIcon()!=null){
+            if (selectSettings.isShowTitleIcon() && selectSettings.getTitleIcon() != null) {
                 titleIcon.setVisibility(View.VISIBLE);
-                LinearLayout.LayoutParams linearParams =(LinearLayout.LayoutParams) titleIcon.getLayoutParams();
+                LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) titleIcon.getLayoutParams();
                 linearParams.width = selectSettings.getTitleIconWidth();
-                linearParams.height =  selectSettings.getTitleIconHeight();
+                linearParams.height = selectSettings.getTitleIconHeight();
                 titleIcon.setLayoutParams(linearParams);
                 titleIcon.setPadding(selectSettings.getTitleIconPaddings()[0],
                         selectSettings.getTitleIconPaddings()[1],
@@ -244,11 +275,11 @@ public class PopupSelect {
                         selectSettings.getTitleIconPaddings()[3]);
 
                 titleIcon.setImageDrawable(selectSettings.getTitleIcon());
-            }else{
+            } else {
                 titleIcon.setVisibility(View.GONE);
             }
 
-            if(selectSettings.isShowTitleText()){
+            if (selectSettings.isShowTitleText()) {
                 titleText.setVisibility(View.VISIBLE);
                 titleText.setTextSize(selectSettings.getTitleTextSize());
                 titleText.setTextColor(selectSettings.getTitleTextColor());
@@ -258,12 +289,12 @@ public class PopupSelect {
                         selectSettings.getTitleTextPaddings()[2],
                         selectSettings.getTitleTextPaddings()[3]);
                 titleText.setGravity(selectSettings.getTitleTextGravity());
-            }else{
+            } else {
                 titleText.setVisibility(View.GONE);
             }
             titleDivision.setVisibility(View.VISIBLE);
             titleDivision.setBackgroundColor(selectSettings.getTitleDividingColor());
-        }else{
+        } else {
             titleView.setVisibility(View.GONE);
             titleDivision.setVisibility(View.GONE);
         }
@@ -278,20 +309,20 @@ public class PopupSelect {
         listView.setScrollBarStyle(selectSettings.getScrollBarStyle());
         listView.setDivider(selectSettings.getListDivider());
         listView.setDividerHeight(selectSettings.getListDividerHeight());
-        if(selectSettings.isShowButton1()||selectSettings.isShowButton2()){
+        if (selectSettings.isShowButton1() || selectSettings.isShowButton2()) {
             buttonDivision1.setVisibility(View.VISIBLE);
             buttonDivision1.setBackgroundColor(selectSettings.getButtonDividingColor());
-        }else{
+        } else {
             buttonDivision1.setVisibility(View.GONE);
         }
-        if(selectSettings.isShowButton1()&&selectSettings.isShowButton2()){
+        if (selectSettings.isShowButton1() && selectSettings.isShowButton2()) {
             buttonDivision2.setVisibility(View.VISIBLE);
             buttonDivision2.setBackgroundColor(selectSettings.getButtonDividingColor());
-        }else{
+        } else {
             buttonDivision2.setVisibility(View.GONE);
         }
 
-        if(selectSettings.isShowButton1()){
+        if (selectSettings.isShowButton1()) {
             button1.setVisibility(View.VISIBLE);
             button1.setText(selectSettings.getButtonTextStr1());
             button1.setTextSize(selectSettings.getButtonTextSize());
@@ -300,11 +331,11 @@ public class PopupSelect {
                     selectSettings.getButtonPaddings()[1],
                     selectSettings.getButtonPaddings()[2],
                     selectSettings.getButtonPaddings()[3]);
-        }else{
+        } else {
             button1.setVisibility(View.GONE);
         }
 
-        if(selectSettings.isShowButton2()){
+        if (selectSettings.isShowButton2()) {
             button2.setVisibility(View.VISIBLE);
             button2.setText(selectSettings.getButtonTextStr2());
             button2.setTextSize(selectSettings.getButtonTextSize());
@@ -313,12 +344,9 @@ public class PopupSelect {
                     selectSettings.getButtonPaddings()[1],
                     selectSettings.getButtonPaddings()[2],
                     selectSettings.getButtonPaddings()[3]);
-        }else{
+        } else {
             button2.setVisibility(View.GONE);
         }
-
-
-
 
 
     }
@@ -338,7 +366,7 @@ public class PopupSelect {
         }
     }
 
-    public PopupWindow getpWindow(){
+    public PopupWindow getpWindow() {
         return pWindow;
     }
 

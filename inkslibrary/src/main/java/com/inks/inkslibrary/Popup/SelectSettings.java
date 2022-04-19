@@ -12,6 +12,18 @@ import java.util.List;
 
 public class SelectSettings {
 
+    public enum PopupAnimation{
+        popup_fade_in_out,popup_bottom_top,popup_top_down,popup_left_right
+    }
+    public enum  SelectImagePosition{
+        LEFT,RIGHT
+    }
+
+    private final boolean autoHeight;
+    private final  int  popupGravity;
+    private final PopupAnimation animation;
+    private final  SelectImagePosition selectImagePosition;
+
     private final boolean focusable;
     private final boolean outsideTouchable;
     private final boolean touchable;
@@ -350,6 +362,22 @@ public class SelectSettings {
         return listLayoutGravity;
     }
 
+    public int getPopupGravity() {
+        return popupGravity;
+    }
+
+    public PopupAnimation getAnimation() {
+        return animation;
+    }
+
+    public SelectImagePosition getSelectImagePosition() {
+        return selectImagePosition;
+    }
+
+    public boolean isAutoHeight() {
+        return autoHeight;
+    }
+
     public static class Builder {
 
         //确认按钮点击后的回调，或单选没设置确认按钮点击list选项的回调
@@ -476,6 +504,19 @@ public class SelectSettings {
         private int listLayoutWidth  =  ViewGroup.LayoutParams.MATCH_PARENT;
         //list每一条的居中,只有listLayoutWidth 为wrap_content 时有效
         private int listLayoutGravity =Gravity.CENTER_HORIZONTAL;
+
+
+
+
+        //弹窗出现的位置，默认居中
+        private   int  popupGravity = Gravity.CENTER;
+        //动画，默认缩放
+        private  PopupAnimation animation = PopupAnimation.popup_fade_in_out;
+        //选着框位置，默认左边
+        private   SelectImagePosition selectImagePosition =SelectImagePosition.LEFT ;
+
+        //自动高度，不会超过设置的高度
+        private  boolean autoHeight = true;
 
         public Builder() {
         }
@@ -801,6 +842,30 @@ public class SelectSettings {
         }
 
 
+        public Builder animation(PopupAnimation animation){
+            this.animation = animation;
+            return  this;
+        }
+
+        public Builder popupGravity(int popupGravity){
+            this.popupGravity = popupGravity;
+            return  this;
+        }
+
+        public Builder selectImagePosition(SelectImagePosition selectImagePosition){
+            this.selectImagePosition = selectImagePosition;
+            return  this;
+        }
+
+        public Builder autoHeight(boolean autoHeight){
+            this.autoHeight = autoHeight;
+            return  this;
+        }
+
+
+
+
+
         public SelectSettings build() {
             return new SelectSettings(this);
         }
@@ -808,6 +873,12 @@ public class SelectSettings {
 
 
     private SelectSettings(Builder builder) {
+        autoHeight = builder.autoHeight;
+     popupGravity = builder.popupGravity;
+     animation = builder.animation;
+     selectImagePosition = builder.selectImagePosition;
+
+
         listLayoutWidth = builder.listLayoutWidth;
         listLayoutGravity = builder.listLayoutGravity;
 

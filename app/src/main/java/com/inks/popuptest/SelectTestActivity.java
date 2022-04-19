@@ -1,21 +1,23 @@
 package com.inks.popuptest;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.inks.inkslibrary.Popup.PopupPrompt;
 import com.inks.inkslibrary.Popup.PopupSelect;
 import com.inks.inkslibrary.Popup.PromptSettings;
 import com.inks.inkslibrary.Popup.SelectListDataBean;
 import com.inks.inkslibrary.Popup.SelectSettings;
+import com.inks.inkslibrary.Utils.DensityUtils;
+import com.inks.inkslibrary.Utils.GetIpAndDisplayUtil;
 import com.inks.inkslibrary.Utils.L;
 
 import java.util.ArrayList;
@@ -89,18 +91,52 @@ public class SelectTestActivity extends AppCompatActivity {
 
     public void ccc(View view) {
 
+
         switch (view.getId()){
             case R.id.test:
+
+                GradientDrawable drawable = new GradientDrawable();
+                //形状（矩形）
+                drawable.setShape(GradientDrawable.RECTANGLE);
+                //渐变方向（左到右）
+                drawable.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
+                //颜色
+                drawable.setColors(new int[]{0XFFeeeeee, 0XFFdddddd, 0XFFeeeeee});
+                int displayHeight = GetIpAndDisplayUtil.getDisplayHeight(this);
+                int dp10 = DensityUtils.dp2px(getApplicationContext(),10);
+                int dp5 = DensityUtils.dp2px(getApplicationContext(),5);
                 SelectSettings.Builder builder = new SelectSettings.Builder();
                 SelectSettings promptSettings =
                         builder.selectListDataBean(selectListDataBeans)
                                 .clickListener(selectBackListener)
+                                .popupWidth(-1)
+                                .multipleSelection(false)
+                                .popupHeight((int) (displayHeight*0.5))
+                                .animation(SelectSettings.PopupAnimation.popup_bottom_top)
+                                .popupGravity(Gravity.BOTTOM)
+                                .selectImagePosition(SelectSettings.SelectImagePosition.RIGHT)
+                                .titleTextGravity(Gravity.CENTER)
+                                .titleTextPaddings(new int[]{0, dp5*3, 0, dp5*3})
+                                .buttonPaddings(new int[]{0, dp5*3, 0, dp5*3})
+                                .listTextPaddings(new int[]{dp10, dp5, 0, dp5})
+                                .showButton2(false)
+                                .showButton1(false)
+                                .listDividerHeight(2)
+                                .listDivider(drawable)
+                                .listPaddings(new int[]{dp10*2, 0, dp10*2,dp10*2})
+                                .listSelectImageOff(ContextCompat.getDrawable(this,R.drawable.select_null))
+                                .listSelectImageOn(ContextCompat.getDrawable(this,R.drawable.select_1))
+                                .listSelectImagePaddings(new int[]{0, 0, 0, 0})
+                                .clippingEnabled(true)
                                 .build();
                 popupSelect.popupSelect(window,context,inflater,promptSettings,0);
+
+
+
                 break;
             case R.id.test2:
-                 builder = new SelectSettings.Builder();
-                 promptSettings =
+                  builder = new SelectSettings.Builder();
+                  promptSettings =
                         builder.selectListDataBean(selectListDataBeans)
                                 .clickListener(selectBackListener)
                                 .titleTextStr("请选择")

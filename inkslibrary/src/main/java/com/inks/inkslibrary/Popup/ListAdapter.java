@@ -63,12 +63,14 @@ public class ListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
-            convertView = mInflater.inflate(GetResId.getId(context, "layout", "popup_select_list"), parent, false); //加载布局
+            convertView = mInflater.inflate(GetResId.getId(context, "layout", "popup_select_list_3"), parent, false); //加载布局
                holder = new ViewHolder();
             //holder.linearLayout = convertView.findViewById(GetResId.getId(context, "id", "popup_select_list"));
             holder.listLayout = convertView.findViewById(GetResId.getId(context, "id", "select_list_layout"));
             holder.textView = convertView.findViewById(GetResId.getId(context, "id", "select_list_text"));
-            holder.imageView = convertView.findViewById(GetResId.getId(context, "id", "select_list_select"));
+            holder.imageViewLeft = convertView.findViewById(GetResId.getId(context, "id", "select_list_select_left"));
+            holder.imageViewRight = convertView.findViewById(GetResId.getId(context, "id", "select_list_select_right"));
+
             holder.iconView = convertView.findViewById(GetResId.getId(context, "id", "select_list_icon"));
             convertView.setTag(holder);
         } else {
@@ -93,30 +95,25 @@ public class ListAdapter extends BaseAdapter {
         }
 
         if(selectSettings.isShowListSelectImage()){
-            holder.imageView.setVisibility(View.VISIBLE);
-             linearParams =(LinearLayout.LayoutParams) holder.imageView.getLayoutParams();
-            linearParams.width = selectSettings.getListSelectImageWidth();
-            linearParams.height = selectSettings.getListSelectImageHeight();
-            holder.imageView.setLayoutParams(linearParams);
-            holder.imageView.setPadding(selectSettings.getListSelectImagePaddings()[0],
-                    selectSettings.getListSelectImagePaddings()[1],
-                    selectSettings.getListSelectImagePaddings()[2],
-                    selectSettings.getListSelectImagePaddings()[3]);
-            if(datas.get(position).isChoosed()){
-                if(selectSettings.getListSelectImageOn()!=null){
-                    holder.imageView.setImageDrawable(selectSettings.getListSelectImageOn());
-                }else{
-                    holder.imageView.setImageResource(GetResId.getId(context, "drawable", "select_on"));
-                }
-            }else{
-                if(selectSettings.getListSelectImageOff()!=null){
-                    holder.imageView.setImageDrawable(selectSettings.getListSelectImageOff());
-                }else{
-                    holder.imageView.setImageResource(GetResId.getId(context, "drawable", "select_off"));
-                }
+
+            switch (selectSettings.getSelectImagePosition()){
+                case LEFT:
+                    holder.imageViewLeft.setVisibility(View.VISIBLE);
+                    holder.imageViewRight.setVisibility(View.GONE);
+                    initSelectImage(holder.imageViewLeft,position);
+
+                    break;
+                case RIGHT:
+                    holder.imageViewRight.setVisibility(View.VISIBLE);
+                    holder.imageViewLeft.setVisibility(View.GONE);
+                    initSelectImage(holder.imageViewRight,position);
+                    break;
             }
+
+
         }else{
-            holder.imageView.setVisibility(View.GONE);
+            holder.imageViewLeft.setVisibility(View.GONE);
+            holder.imageViewRight.setVisibility(View.GONE);
         }
 
         if(selectSettings.isShowListIcon() &&datas.get(position).getIcon()!=null){
@@ -139,7 +136,31 @@ public class ListAdapter extends BaseAdapter {
     private class ViewHolder {
         LinearLayout linearLayout,listLayout;
         TextView textView;
-        ImageView imageView;
+        ImageView imageViewLeft,imageViewRight;
         ImageView iconView;
+    }
+
+    private void initSelectImage(ImageView imageView,int position){
+        LinearLayout.LayoutParams   linearParams =(LinearLayout.LayoutParams) imageView.getLayoutParams();
+        linearParams.width = selectSettings.getListSelectImageWidth();
+        linearParams.height = selectSettings.getListSelectImageHeight();
+        imageView.setLayoutParams(linearParams);
+        imageView.setPadding(selectSettings.getListSelectImagePaddings()[0],
+                selectSettings.getListSelectImagePaddings()[1],
+                selectSettings.getListSelectImagePaddings()[2],
+                selectSettings.getListSelectImagePaddings()[3]);
+        if(datas.get(position).isChoosed()){
+            if(selectSettings.getListSelectImageOn()!=null){
+                imageView.setImageDrawable(selectSettings.getListSelectImageOn());
+            }else{
+                imageView.setImageResource(GetResId.getId(context, "drawable", "select_on"));
+            }
+        }else{
+            if(selectSettings.getListSelectImageOff()!=null){
+                imageView.setImageDrawable(selectSettings.getListSelectImageOff());
+            }else{
+                imageView.setImageResource(GetResId.getId(context, "drawable", "select_off"));
+            }
+        }
     }
 }

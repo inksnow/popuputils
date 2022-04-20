@@ -80,6 +80,11 @@ public class ListAdapter extends BaseAdapter {
         linearParams.width = selectSettings.getListLayoutWidth();
         linearParams.gravity = selectSettings.getListLayoutGravity();
         holder.listLayout.setLayoutParams(linearParams);
+        holder.listLayout.setPadding(selectSettings.getListLayoutPadding()[0],
+                selectSettings.getListLayoutPadding()[1],
+                selectSettings.getListLayoutPadding()[2],
+                selectSettings.getListLayoutPadding()[3]);
+
 
         holder.textView.setText(datas.get(position).getText());
         holder.textView.setTextSize(selectSettings.getListTextSize());

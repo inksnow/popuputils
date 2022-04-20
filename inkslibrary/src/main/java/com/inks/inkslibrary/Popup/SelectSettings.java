@@ -23,6 +23,8 @@ public class SelectSettings {
     private final  int  popupGravity;
     private final PopupAnimation animation;
     private final  SelectImagePosition selectImagePosition;
+    private final int[] listLayoutPadding;
+
 
     private final boolean focusable;
     private final boolean outsideTouchable;
@@ -378,6 +380,10 @@ public class SelectSettings {
         return autoHeight;
     }
 
+    public int[] getListLayoutPadding() {
+        return listLayoutPadding;
+    }
+
     public static class Builder {
 
         //确认按钮点击后的回调，或单选没设置确认按钮点击list选项的回调
@@ -412,6 +418,8 @@ public class SelectSettings {
         private int[] titleTextPaddings={80,20,20,20};
         private int[] listPaddings={20,10,20,10};
         private int[] buttonPaddings={20,20,20,20};
+        private  int[] listLayoutPadding={0,0,0,0};
+
         //宽
         private int popupWidth =700;
         //高
@@ -504,6 +512,7 @@ public class SelectSettings {
         private int listLayoutWidth  =  ViewGroup.LayoutParams.MATCH_PARENT;
         //list每一条的居中,只有listLayoutWidth 为wrap_content 时有效
         private int listLayoutGravity =Gravity.CENTER_HORIZONTAL;
+
 
 
 
@@ -864,7 +873,10 @@ public class SelectSettings {
 
 
 
-
+        public Builder listLayoutPadding(int[] listLayoutPadding){
+            this.listLayoutPadding = listLayoutPadding;
+            return  this;
+        }
 
         public SelectSettings build() {
             return new SelectSettings(this);
@@ -877,7 +889,7 @@ public class SelectSettings {
      popupGravity = builder.popupGravity;
      animation = builder.animation;
      selectImagePosition = builder.selectImagePosition;
-
+        listLayoutPadding = builder.listLayoutPadding;
 
         listLayoutWidth = builder.listLayoutWidth;
         listLayoutGravity = builder.listLayoutGravity;

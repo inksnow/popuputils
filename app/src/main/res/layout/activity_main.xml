@@ -37,6 +37,45 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:onClick="buttonClick"
+        android:elevation="20dp"
         />
+
+
+    <com.inks.popuptest.LoadButton
+        android:id="@+id/LoadButton"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:onClick="buttonClick"
+        app:text="按钮"
+        app:text_size="14sp"
+        app:bar_width="30dp"
+        android:layout_margin="20dp"
+        app:bg_elevation="10dp"
+        app:bg_margin="20dp"
+        android:elevation="10dp"
+
+        >
+    </com.inks.popuptest.LoadButton>
+
+  <com.inks.popuptest.TestView
+      android:id="@+id/test1"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:layout_margin="20dp"
+      android:text="aaaa"
+      android:onClick="buttonClick"
+      android:elevation="10dp"
+      android:padding="10dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:text="aaaa"
+        android:background="#000000"
+        android:elevation="10dp"
+        android:onClick="buttonClick"
+        android:padding="10dp"/>
+
 
 </LinearLayout>

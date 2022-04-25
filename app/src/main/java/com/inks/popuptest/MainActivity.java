@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.inks.inkslibrary.Utils.L;
+
+import static com.inks.inkslibrary.Utils.DensityUtils.dp2px;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -30,6 +34,18 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this,PopupViewTestActivity.class);
                 startActivity(intent);
                 
+                break;
+            case R.id.LoadButton:
+                LoadButton loadButton =(LoadButton)  view;
+                loadButton.start(new LoadButton.OnLoadListener() {
+                    @Override
+                    public void onLoad() {
+                        L.e("onload");
+                    }
+                });
+
+                break;
+            case R.id.test1:
                 break;
         }
     }

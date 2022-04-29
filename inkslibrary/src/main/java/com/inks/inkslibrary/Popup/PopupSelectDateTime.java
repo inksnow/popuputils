@@ -23,7 +23,7 @@ import java.util.Calendar;
 
 public class PopupSelectDateTime {
     public interface OnClickListener {
-        public void onTimeSet(String timeStr, int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute);
+        public void onTimeSet(String timeStr, int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int what);
 
         public void onCancelBack();
 
@@ -44,6 +44,8 @@ public class PopupSelectDateTime {
     private int rightYear = 100;
     private boolean showYearMonthDay;
     private boolean showHourMinute;
+
+    private int what;
 
     //选择
     private int selectYear, selectMonth, selectDay, selectHour, selectMinute;
@@ -117,30 +119,30 @@ public class PopupSelectDateTime {
     }
 
     public void popupDateTime(Window window, Context context) {
-        popupDateTime(window, context, null, null);
+        popupDateTime(window, context, null, null,0);
     }
 
     public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings) {
-        popupDateTime(window, context, settings, null);
+        popupDateTime(window, context, settings, null,0);
     }
 
     public void popupDateTime(Window window, Context context, OnClickListener mOnClickListener) {
-        popupDateTime(window, context, null, mOnClickListener);
+        popupDateTime(window, context, null, mOnClickListener,0);
     }
 
-    public void popupDateTime(Window window, Context context, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener) {
+    public void popupDateTime(Window window, Context context, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener,int what) {
         initSelectWithNowTime();
-        popupDateTime(window, context, null, showYearMonthDay, showHourMinute, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute);
+        popupDateTime(window, context, null, showYearMonthDay, showHourMinute, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute,what);
     }
 
-    public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, OnClickListener mOnClickListener) {
+    public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, OnClickListener mOnClickListener,int what) {
         initSelectWithNowTime();
-        popupDateTime(window, context, settings, true, true, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute);
+        popupDateTime(window, context, settings, true, true, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute,what);
     }
 
     @SuppressLint("ClickableViewAccessibility")
     public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener,
-                              int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute) {
+                              int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int what) {
 
         initLists();
         this.window = window;
@@ -149,6 +151,7 @@ public class PopupSelectDateTime {
         this.mOnClickListener = mOnClickListener;
         this.showYearMonthDay = showYearMonthDay;
         this.showHourMinute = showHourMinute;
+        this.what = what;
 
         if (!(pWindow != null && pWindow.isShowing())) {
             contentView = LayoutInflater.from(context).inflate(R.layout.popup_select_date_time, null);
@@ -269,7 +272,7 @@ public class PopupSelectDateTime {
             miss();
             if (v.getId() == R.id.buttonDone) {
                 if (mOnClickListener != null) {
-                    mOnClickListener.onTimeSet(textViewTime.getText().toString(), selectYear, selectMonth, selectDay, selectHour, selectMinute);
+                    mOnClickListener.onTimeSet(textViewTime.getText().toString(), selectYear, selectMonth, selectDay, selectHour, selectMinute,what);
                 }
             } else if (v.getId() == R.id.buttonCancel) {
                 if (mOnClickListener != null) {

@@ -17,5 +17,13 @@
         <attr name="bg_elevation" format="dimension"/>
         <attr name="load_delayed" format="integer"/>
     </declare-styleable>
+    <declare-styleable name="LongClickView">
+        <attr name="maxSeconds" format="integer" />
+        <attr name="annulusWidth" format="integer" />
+        <attr name="annulusColor" format="color" />
+        <attr name="delayMilliseconds" format="integer" />
+    </declare-styleable>
+
+
 </resources>
 

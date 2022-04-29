@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/inks/popuptest/PunchRangeTimeUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/inkslibrary/src/main/java/com/inks/inkslibrary/view/ClickEffectText.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/inkslibrary/src/main/res/drawable/bg_popup_select_date_time.xml" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

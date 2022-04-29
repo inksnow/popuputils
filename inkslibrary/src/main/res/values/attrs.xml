@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ClickEffect">
+        <attr name="ColorFilter" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="RollerPickerView">
+        <attr name="textUncheckedColour" format="color"/>
+        <attr name="textSelectionColour" format="color"/>
+        <attr name="midTextScale" format="float"/>
+        <attr name="selectedBgMid" format="color"/>
+        <attr name="selectedBgSides" format="color"/>
+        <attr name="unSelectedBgMid" format="color"/>
+        <attr name="unSelectedBgSides" format="color"/>
+        <attr name="dividingLineColor" format="color"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="itemNumber" format="integer"/>
+        <attr name="leftDeviation" format="dimension"/>
+        <attr name="tagRightDeviation" format="dimension"/>
+        <attr name="tagTextSize" format="dimension"/>
+        <attr name="tagColor" format="color"/>
+        <attr name="tagText" format="string"/>
+    </declare-styleable>
+</resources>
+

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_popup_select_date_time"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <com.inks.inkslibrary.view.ClickEffectText
+            android:id="@+id/buttonCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="取消"
+            android:textColor="#03A9F4"
+            android:textSize="16sp"
+            app:ColorFilter="#777777" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="2022-04-29 09:46"
+            android:textSize="16sp" />
+
+        <com.inks.inkslibrary.view.ClickEffectText
+            android:id="@+id/buttonDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="确定"
+            android:textColor="#03A9F4"
+            android:textSize="16sp"
+            app:ColorFilter="#777777" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#55dddddd" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f0f0f0"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/layout_y_m_d"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:background="#f0f0f0"
+            android:orientation="horizontal">
+
+
+            <com.inks.inkslibrary.view.PickerView
+                android:id="@+id/pv_year"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                app:tagText="年"
+                app:tagAfterItem="true"
+                app:tagRightDeviation="15dp"
+                android:layout_height="wrap_content"/>
+
+            <com.inks.inkslibrary.view.PickerView
+                android:id="@+id/pv_month"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                app:tagText="月"
+                app:tagAfterItem="true"
+                app:tagRightDeviation="15dp"
+                android:layout_height="wrap_content"/>
+
+            <com.inks.inkslibrary.view.PickerView
+                android:id="@+id/pv_day"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                app:tagText="日"
+                app:tagAfterItem="true"
+                app:tagRightDeviation="15dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_h_m"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:background="#f0f0f0"
+            android:orientation="horizontal">
+
+            <com.inks.inkslibrary.view.PickerView
+                android:id="@+id/pv_hour"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                app:tagText="时"
+                app:tagAfterItem="true"
+                app:tagRightDeviation="15dp"
+                android:layout_height="wrap_content"/>
+
+            <com.inks.inkslibrary.view.PickerView
+                android:id="@+id/pv_minute"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                app:tagText="分"
+                app:tagAfterItem="true"
+                app:tagRightDeviation="15dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,25 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="textSize" format="dimension" />
+    <attr name="leftDeviation" format="dimension" />
+    <attr name="tagRightDeviation" format="dimension" />
+    <attr name="tagTextSize" format="dimension" />
+    <attr name="tagColor" format="color" />
+    <attr name="tagText" format="string" />
+    <attr name="tagAfterItem" format="boolean" />
+
+
     <declare-styleable name="ClickEffect">
-        <attr name="ColorFilter" format="color"/>
+        <attr name="ColorFilter" format="color" />
     </declare-styleable>
 
     <declare-styleable name="RollerPickerView">
-        <attr name="textUncheckedColour" format="color"/>
-        <attr name="textSelectionColour" format="color"/>
-        <attr name="midTextScale" format="float"/>
-        <attr name="selectedBgMid" format="color"/>
-        <attr name="selectedBgSides" format="color"/>
-        <attr name="unSelectedBgMid" format="color"/>
-        <attr name="unSelectedBgSides" format="color"/>
-        <attr name="dividingLineColor" format="color"/>
-        <attr name="textSize" format="dimension"/>
-        <attr name="itemNumber" format="integer"/>
-        <attr name="leftDeviation" format="dimension"/>
-        <attr name="tagRightDeviation" format="dimension"/>
-        <attr name="tagTextSize" format="dimension"/>
-        <attr name="tagColor" format="color"/>
-        <attr name="tagText" format="string"/>
+        <attr name="textUncheckedColour" format="color" />
+        <attr name="textSelectionColour" format="color" />
+        <attr name="midTextScale" format="float" />
+        <attr name="selectedBgMid" format="color" />
+        <attr name="selectedBgSides" format="color" />
+        <attr name="unSelectedBgMid" format="color" />
+        <attr name="unSelectedBgSides" format="color" />
+        <attr name="dividingLineColor" format="color" />
+        <attr name="textSize" />
+        <attr name="itemNumber" format="integer" />
+        <attr name="leftDeviation" />
+        <attr name="tagRightDeviation" />
+        <attr name="tagTextSize" />
+        <attr name="tagColor" />
+        <attr name="tagText" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PickerView">
+        <attr name="autoFitSize" format="boolean" />
+        <attr name="curved" format="boolean" />
+        <attr name="isCyclic" format="boolean" />
+        <attr name="itemHeight" format="dimension" />
+        <attr name="textSize" />
+        <attr name="preferredMaxOffsetItemCount" format="integer" />
+        <attr name="textColor" format="color" />
+        <attr name="leftDeviation" />
+        <attr name="tagRightDeviation" />
+        <attr name="tagTextSize" />
+        <attr name="tagColor" />
+        <attr name="tagText" />
+        <attr name="tagAfterItem" />
+
     </declare-styleable>
 </resources>
 

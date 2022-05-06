@@ -1,30 +1,35 @@
 package com.inks.popuptest;
 
 import android.content.Intent;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
+import com.inks.inkslibrary.Popup.PopupSelectDateAndAmPm;
 import com.inks.inkslibrary.Popup.PopupSelectDateTime;
+import com.inks.inkslibrary.Popup.PopupSelectDateTime2;
 import com.inks.inkslibrary.Utils.L;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
-import static com.inks.inkslibrary.Utils.DensityUtils.dp2px;
+import top.defaults.view.DateTimePickerView;
 
 public class MainActivity extends AppCompatActivity {
     PopupSelectDateTime selectDateTime;
+    PopupSelectDateTime2 selectDateTime2;
+    PopupSelectDateAndAmPm selectDateAndAmPm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         selectDateTime = new PopupSelectDateTime();
-
+        selectDateTime2 = new PopupSelectDateTime2();
+        selectDateAndAmPm = new PopupSelectDateAndAmPm();
+        DateTimePickerView dateTimePickerView = findViewById(R.id.datePickerView) ;
+        dateTimePickerView.setStartDate(Calendar.getInstance());
+// 注意：月份是从0开始计数的
+        dateTimePickerView.setSelectedDate(new GregorianCalendar(2023, 6, 27, 21, 30));
     }
 
     public void buttonClick(View view) {
@@ -48,16 +53,29 @@ public class MainActivity extends AppCompatActivity {
                 loadButton.start(new LoadButton.OnLoadListener() {
                     @Override
                     public void onLoad() {
-                        L.e("onload");
+                        selectDateTime2.popupDateTime(getWindow(), getApplicationContext(), true,true, new PopupSelectDateTime2.OnClickListener() {
+                            @Override
+                            public void onTimeSet(String timeStr, int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int a) {
+                                L.e(timeStr);
+                            }
+
+                            @Override
+                            public void onCancelBack() {
+
+                            }
+                        },0);
+
+
+
                     }
                 });
 
                 break;
             case R.id.test1:
 
-                selectDateTime.popupDateTime(getWindow(), getApplicationContext(), true,false, new PopupSelectDateTime.OnClickListener() {
+                selectDateAndAmPm.popupDateTime(getWindow(), getApplicationContext(), new PopupSelectDateAndAmPm.OnClickListener() {
                     @Override
-                    public void onTimeSet(String timeStr, int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int a) {
+                    public void onTimeSet(String timeStr, int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute, String selectAmPm, int what) {
                         L.e(timeStr);
                     }
 
@@ -65,7 +83,20 @@ public class MainActivity extends AppCompatActivity {
                     public void onCancelBack() {
 
                     }
-                },0);
+                });
+
+
+//                selectDateTime.popupDateTime(getWindow(), getApplicationContext(), true,false, new PopupSelectDateTime.OnClickListener() {
+//                    @Override
+//                    public void onTimeSet(String timeStr, int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int a) {
+//                        L.e(timeStr);
+//                    }
+//
+//                    @Override
+//                    public void onCancelBack() {
+//
+//                    }
+//                },0);
 
 
 

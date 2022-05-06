@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <attr format="boolean" name="autoFitSize"/>-->
+<!--    <attr format="boolean" name="curved"/>-->
+<!--    <attr format="boolean" name="isCyclic"/>-->
+<!--    <attr format="dimension" name="itemHeight"/>-->
+<!--    <attr format="integer" name="preferredMaxOffsetItemCount"/>-->
+<!--    <attr format="color" name="textColor"/>-->
+
+<!--    <declare-styleable name="PickerView">-->
+<!--        <attr name="preferredMaxOffsetItemCount" />-->
+<!--        <attr name="itemHeight" />-->
+<!--        <attr name="textSize" />-->
+<!--        <attr name="textColor" />-->
+<!--        <attr name="isCyclic" />-->
+<!--        <attr name="autoFitSize" />-->
+<!--        <attr name="curved" />-->
+<!--        <attr name="leftDeviation" format="dimension"/>-->
+<!--        <attr name="tagRightDeviation" format="dimension"/>-->
+<!--        <attr name="tagTextSize" format="dimension"/>-->
+<!--        <attr name="tagColor" format="color"/>-->
+<!--        <attr name="tagText" format="string"/>-->
+<!--    </declare-styleable>-->
+</resources>

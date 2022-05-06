@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
                 selectDateTime.popupDateTime(getWindow(), getApplicationContext(), true,false, new PopupSelectDateTime.OnClickListener() {
                     @Override
-                    public void onTimeSet(String timeStr, int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute) {
+                    public void onTimeSet(String timeStr, int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int a) {
                         L.e(timeStr);
                     }
 
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onCancelBack() {
 
                     }
-                });
+                },0);
 
 
 

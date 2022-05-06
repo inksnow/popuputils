@@ -79,6 +79,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                app:textSize="16sp"
                 app:tagText="月"
                 app:tagRightDeviation="15dp"
                 app:leftDeviation="15dp"
@@ -90,6 +91,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:tagText="日"
+                app:textSize="16sp"
                 app:tagRightDeviation="15dp"
                 app:leftDeviation="15dp"
                 app:itemNumber="5"/>
@@ -110,6 +112,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:tagText="时"
+                app:textSize="16sp"
                 app:tagRightDeviation="15dp"
                 app:leftDeviation="15dp"
                 app:itemNumber="5"/>
@@ -120,6 +123,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 app:tagText="分"
+                app:textSize="16sp"
                 app:tagRightDeviation="15dp"
                 app:leftDeviation="15dp"
                 app:itemNumber="5"/>

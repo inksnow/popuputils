@@ -1,7 +1,8 @@
 package com.inks.inkslibrary.Utils;
 
-import android.support.v4.view.ViewPager;
 import android.view.animation.OvershootInterpolator;
+
+import androidx.viewpager.widget.ViewPager;
 
 import java.lang.reflect.Field;
 

@@ -4,10 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_web.xml" value="0.13194444444444445" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/drawable/bg_popup_select_date_time.xml" value="0.153" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/activity_lib_up.xml" value="0.4" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_select_date_time.xml" value="0.1" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_select_date_time_2.xml" value="0.14275956284153005" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_select_date_time_am_pm.xml" value="0.12048611111111111" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_view.xml" value="0.12986111111111112" />
       </map>
     </option>
   </component>

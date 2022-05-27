@@ -1,16 +1,25 @@
 package com.inks.inkslibrary.Utils;
 
-import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
+import java.util.Formatter;
+
 /**
- * Created by Administrator on 2018/3/30 0030.
+ *
+ * ProjectName:
+ * Package:        com.inks.inkslibrary.Utils
+ * ClassName:      L
+ * Description:    log打印
+ * Author:         inks
+ * CreateDate:     2022/5/27 10:59
  */
 
 public class L {
     private L() {
-               /* 不可被实例化 */
+        /* 不可被实例化 */
         throw new UnsupportedOperationException("Cannot be instantiated!");
     }
 
@@ -18,26 +27,106 @@ public class L {
     public static boolean isDebug = true;
     private static final String TAG = "DefaultTag";
 
-    // 下面四个是默认tag的函数
     public static void i(String msg) {
         if (isDebug)
-            Log.i(TAG, msg);
+            Log.i(getClassName(), msg);
     }
 
     public static void d(String msg) {
         if (isDebug)
-            Log.d(TAG, msg);
+            Log.d(getClassName(), msg);
     }
 
     public static void e(String msg) {
         if (isDebug)
-            Log.e(TAG, msg);
+            Log.e(getClassName(), msg);
     }
 
     public static void v(String msg) {
         if (isDebug)
-            Log.v(TAG, msg);
+            Log.v(getClassName(), msg);
     }
+    public static void w(String msg) {
+        if (isDebug)
+            Log.w(getClassName(), msg);
+    }
+
+    public static void ii(String msg) {
+        if (isDebug)
+            Log.i(getClassLine(), msg);
+    }
+
+    public static void dd(String msg) {
+        if (isDebug)
+            Log.d(getClassLine(), msg);
+    }
+
+    public static void ee(String msg) {
+        if (isDebug)
+            Log.e(getClassLine(), msg);
+    }
+
+    public static void vv(String msg) {
+        if (isDebug)
+            Log.v(getClassLine(), msg);
+    }
+
+    public static void ww(String msg) {
+        if (isDebug)
+            Log.w(getClassLine(), msg);
+    }
+
+    public static void iii(String msg) {
+        if (isDebug)
+            Log.i(getClassLine(), " "+"\n"+msg);
+    }
+
+    public static void ddd(String msg) {
+        if (isDebug)
+            Log.d(getClassLine(), " "+"\n"+msg);
+    }
+
+    public static void eee(String msg) {
+        if (isDebug)
+            Log.e(getClassLine(), " "+"\n"+msg);
+    }
+
+    public static void vvv(String msg) {
+        if (isDebug)
+            Log.v(getClassLine(), " "+"\n"+msg);
+    }
+
+    public static void www(String msg) {
+        if (isDebug)
+            Log.w(getClassLine(), " "+"\n"+msg);
+    }
+
+
+    public static void ii(Object... contents) {
+        if (isDebug)
+            Log.i(getClassLine(), contents2String(contents));
+    }
+
+    public static void dd(Object... contents) {
+        if (isDebug)
+            Log.d(getClassLine(), contents2String(contents));
+    }
+
+    public static void ee(Object... contents) {
+        if (isDebug)
+            Log.e(getClassLine(), contents2String(contents));
+    }
+
+    public static void vv(Object... contents) {
+        if (isDebug)
+            Log.v(getClassLine(), contents2String(contents));
+    }
+
+    public static void ww(Object... contents) {
+        if (isDebug)
+            Log.w(getClassLine(), contents2String(contents));
+    }
+
 
     // 下面是传入自定义tag的函数
     public static void i(String tag, String msg) {
@@ -47,72 +136,94 @@ public class L {
 
     public static void d(String tag, String msg) {
         if (isDebug)
-            Log.i(tag, msg);
+            Log.d(tag, msg);
     }
 
     public static void e(String tag, String msg) {
         if (isDebug)
-            Log.i(tag, msg);
+            Log.e(tag, msg);
     }
 
     public static void v(String tag, String msg) {
         if (isDebug)
-            Log.i(tag, msg);
+            Log.v(tag, msg);
     }
-    // 下面是传入context的函数
-    public static void i(Context context, String msg) {
-        if (isDebug){
-            try {
-                Activity activity = (Activity)context;
-                Log.i(activity.getComponentName().getClassName(), msg);
+    public static void w(String tag, String msg) {
+        if (isDebug)
+            Log.w(tag, msg);
+    }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                //说明是ApplicationContext
-                Log.i("ApplicationContext", msg);
+
+    private static String getClassLine() {
+        final StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+        final int stackIndex = 2;
+        if (stackIndex >= stackTrace.length) {
+            return TAG;
+        }
+
+        StackTraceElement targetElement = stackTrace[stackIndex];
+        final String fileName = getFileName(targetElement);
+        return new Formatter()
+                .format("(%s:%d)",
+                        fileName,
+                        targetElement.getLineNumber())
+                .toString();
+    }
+
+    private static String getClassName() {
+        final StackTraceElement[] stackTrace = new Throwable().getStackTrace();
+        final int stackIndex = 2;
+        if (stackIndex >= stackTrace.length) {
+            return "DefaultTag";
+        }
+        StackTraceElement targetElement = stackTrace[stackIndex];
+        return targetElement.getClassName()+":"+targetElement.getLineNumber();
+    }
+
+
+    private static String getFileName(final StackTraceElement targetElement) {
+        String fileName = targetElement.getFileName();
+        if (fileName != null) return fileName;
+        String className = targetElement.getClassName();
+        String[] classNameInfo = className.split("\\.");
+        if (classNameInfo.length > 0) {
+            className = classNameInfo[classNameInfo.length - 1];
+        }
+        int index = className.indexOf('$');
+        if (index != -1) {
+            className = className.substring(0, index);
+        }
+        return className + ".java";
+    }
+
+    private static String contents2String(Object... contents){
+        String back = " ";
+        if(contents==null){
+            return back;
+        }
+        for (int i = 0; i < contents.length; i++) {
+            try {
+                if (contents[i] instanceof Intent
+                        ||contents[i] instanceof Long
+                        ||contents[i] instanceof Double
+                        ||contents[i] instanceof Float
+                        ||contents[i] instanceof String
+                ){
+                    back = back+"\n"+contents[i].toString();
+
+                } else{
+                    back = back+"\n"+new  Gson().toJson(contents[i]);
+
+                }
+
+            }catch (Exception | Error e ){
+                back = back+"\n"+contents[i].getClass().getSimpleName()+" 转Json失败";
 
             }
         }
+
+        return back;
+
     }
-    public static void d(Context context, String msg) {
-        if (isDebug){
-            try {
-                Activity activity = (Activity)context;
-                Log.d(activity.getComponentName().getClassName(), msg);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                //说明是ApplicationContext
-                Log.d("ApplicationContext", msg);
-
-            }
-        }
-    }
-    public static void e(Context context, String msg) {
-        if (isDebug){
-            try {
-                Activity activity = (Activity)context;
-                Log.e(activity.getComponentName().getClassName(), msg);
-            } catch (Exception e) {
-                e.printStackTrace();
-                //说明是ApplicationContext
-                Log.e("ApplicationContext", msg);
-
-            }
-        }
-    }
-    public static void v(Context context, String msg) {
-        if (isDebug){
-            try {
-                Activity activity = (Activity)context;
-                Log.v(activity.getComponentName().getClassName(), msg);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                //说明是ApplicationContext
-                Log.v("ApplicationContext", msg);
-
-            }
-        }
-    }
 }

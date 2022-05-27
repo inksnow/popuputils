@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -17,23 +16,21 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.google.gson.Gson;
-import com.inks.inkslibrary.R;
 import com.inks.inkslibrary.Service.QueryVersionBackBean;
 import com.inks.inkslibrary.Utils.APKVersionCodeUtils;
 import com.inks.inkslibrary.Utils.ClickUtil;
@@ -146,7 +143,7 @@ public class LibUpActivity extends Activity {
         //形状（矩形）
         drawable.setShape(GradientDrawable.RECTANGLE);
         //渐变样式
-        drawable.setGradientType(GradientDrawable.RECTANGLE);
+        drawable.setGradientType(GradientDrawable.LINEAR_GRADIENT);
         //渐变方向（左到右）
         drawable.setOrientation(LibUpUIData.getOrientation());
         //圆角

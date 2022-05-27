@@ -51,27 +51,27 @@ public class L {
             Log.w(getClassName(), msg);
     }
 
-    public static void ii(String msg) {
+    public static void is(String msg) {
         if (isDebug)
             Log.i(getClassLine(), msg);
     }
 
-    public static void dd(String msg) {
+    public static void ds(String msg) {
         if (isDebug)
             Log.d(getClassLine(), msg);
     }
 
-    public static void ee(String msg) {
+    public static void es(String msg) {
         if (isDebug)
             Log.e(getClassLine(), msg);
     }
 
-    public static void vv(String msg) {
+    public static void vs(String msg) {
         if (isDebug)
             Log.v(getClassLine(), msg);
     }
 
-    public static void ww(String msg) {
+    public static void ws(String msg) {
         if (isDebug)
             Log.w(getClassLine(), msg);
     }
@@ -177,7 +177,13 @@ public class L {
             return "DefaultTag";
         }
         StackTraceElement targetElement = stackTrace[stackIndex];
-        return targetElement.getClassName()+":"+targetElement.getLineNumber();
+        String className = targetElement.getClassName();
+
+        String[] classNameInfo = className.split("\\.");
+        if (classNameInfo.length > 0) {
+            className = classNameInfo[classNameInfo.length - 1];
+        }
+        return className+":"+targetElement.getLineNumber();
     }
 
 

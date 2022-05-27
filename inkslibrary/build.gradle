@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.squareup.okio:okio:1.14.0'
     implementation 'com.google.code.gson:gson:2.8.5'
 
-    implementation 'com.alibaba.fastjson2:fastjson2:2.0.4'
+  //  implementation 'com.alibaba.fastjson2:fastjson2:2.0.4'
 
     //implementation 'com.github.duanhong169:picker-view:1.0.0'
 

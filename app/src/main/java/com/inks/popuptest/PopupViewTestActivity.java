@@ -90,6 +90,7 @@ public class PopupViewTestActivity extends AppCompatActivity {
                                 .titleIcon(getDrawable(R.mipmap.ic_launcher_round))
                                 .titleTextPaddings(new int[]{10,20,0,20})
                                 .showTitleIcon(true)
+                                .popupHeight(-2)
                                 .build();
                 popupView.popupView(window,context,inflater,linearLayout,promptSettings,3);
 
@@ -104,6 +105,7 @@ public class PopupViewTestActivity extends AppCompatActivity {
                         builder .clickListener(popupBackListener)
                                 .showTitle(false)
                                 .showButton1(false)
+                                .popupHeight(-2)
                                 .build();
                 popupView.popupView(window,context,inflater,textView,promptSettings,4);
                 break;

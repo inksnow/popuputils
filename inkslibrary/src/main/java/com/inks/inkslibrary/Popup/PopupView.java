@@ -165,7 +165,7 @@ public class PopupView {
         //形状（矩形）
         drawable.setShape(GradientDrawable.RECTANGLE);
         //渐变样式
-        drawable.setGradientType(GradientDrawable.RECTANGLE);
+        drawable.setGradientType(GradientDrawable.LINEAR_GRADIENT);
         //渐变方向（左到右）
         drawable.setOrientation(GradientDrawable.Orientation.LEFT_RIGHT);
         //圆角

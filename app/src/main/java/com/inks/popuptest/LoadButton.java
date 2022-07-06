@@ -96,7 +96,7 @@ public class LoadButton extends FrameLayout {
         this(context, null);
     }
 
-    public LoadButton(@NonNull Context context, @org.jetbrains.annotations.Nullable AttributeSet attrs) {
+    public LoadButton(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 

@@ -122,14 +122,16 @@ public class SelectTestActivity extends AppCompatActivity {
                                 .buttonPaddings(new int[]{0, dp5*3, 0, dp5*3})
                                 .listTextPaddings(new int[]{dp10, dp5, 0, dp5})
                                 .showButton2(false)
-                                .showButton1(false)
+                                .showButton1(true)
                                 .listDividerHeight(2)
                                 .listDivider(drawable)
                                 .listPaddings(new int[]{dp10*2, 0, dp10*2,dp10*2})
                                 .listSelectImageOff(ContextCompat.getDrawable(this,R.drawable.select_null))
                                 .listSelectImageOn(ContextCompat.getDrawable(this,R.drawable.select_1))
-                                .listSelectImagePaddings(new int[]{0, 0, 0, 0})
+                                .listSelectImagePaddings(new int[]{dp5, dp5, dp5, dp5})
                                 .clippingEnabled(true)
+                                //.focusable(false)
+                                .outsideTouchable(false)
                                 .build();
                 popupSelect.popupSelect(window,context,inflater,promptSettings,0);
 

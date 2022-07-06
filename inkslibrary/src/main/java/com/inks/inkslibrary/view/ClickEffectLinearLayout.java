@@ -51,6 +51,30 @@ public class ClickEffectLinearLayout extends LinearLayout {
 
     }
 
+    public int getDownColor() {
+        return downColor;
+    }
+
+    public void setDownColor(int downColor) {
+        this.downColor = downColor;
+    }
+
+    public int getInitColor() {
+        return initColor;
+    }
+
+    public void setInitColor(int initColor) {
+        this.initColor = initColor;
+    }
+
+    public int getHintColor() {
+        return hintColor;
+    }
+
+    public void setHintColor(int hintColor) {
+        this.hintColor = hintColor;
+    }
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);

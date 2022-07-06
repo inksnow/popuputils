@@ -40,7 +40,13 @@ public class ClickEffectImage extends androidx.appcompat.widget.AppCompatImageVi
         }
     }
 
+    public int getDownColor() {
+        return downColor;
+    }
 
+    public void setDownColor(int downColor) {
+        this.downColor = downColor;
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

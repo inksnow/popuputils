@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.inks.inkslibrary.Popup.PopupSelectDateAndAmPm;
 import com.inks.inkslibrary.Popup.PopupSelectDateTime;
 import com.inks.inkslibrary.Popup.PopupSelectDateTime2;
+import com.inks.inkslibrary.Utils.GetMacUtil;
 import com.inks.inkslibrary.Utils.L;
+import com.inks.inkslibrary.Utils.MacUtils;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -32,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 // 注意：月份是从0开始计数的
         dateTimePickerView.setSelectedDate(new GregorianCalendar(2023, 6, 27, 21, 30));
 
-
+        L.ee(GetMacUtil.getMacAddr());
+        L.ee(GetMacUtil.getMacAddress(getApplicationContext()));
+        L.ee(MacUtils.getMacAddress(getApplicationContext()));
 
     }
 
@@ -109,5 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
 
 }

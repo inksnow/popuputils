@@ -45,8 +45,8 @@ public class PopupSelect {
     private ListView listView;
     private View buttonDivision1;
     private View buttonDivision2;
-    private TextView button1;
-    private TextView button2;
+    private TextView button1, buttonTop1;
+    private TextView button2, buttonTop2;
 
     private ListAdapter listAdapter;
     private List<SelectListDataBean> selectListDataBeans;
@@ -75,6 +75,9 @@ public class PopupSelect {
                 buttonDivision2 = contentView.findViewById(GetResId.getId(context, "id", "popup_button_division"));
                 button1 = contentView.findViewById(GetResId.getId(context, "id", "popup_button_1"));
                 button2 = contentView.findViewById(GetResId.getId(context, "id", "popup_button_2"));
+
+                buttonTop1 = contentView.findViewById(GetResId.getId(context, "id", "popup_button_top_1"));
+                buttonTop2 = contentView.findViewById(GetResId.getId(context, "id", "popup_button_top_2"));
                 initView();
 
                 listAdapter = new ListAdapter(context, selectSettings, selectListDataBeans);
@@ -117,8 +120,17 @@ public class PopupSelect {
                 button2.setOnTouchListener(touchListener);
                 button1.setOnClickListener(clickListener);
                 button2.setOnClickListener(clickListener);
+
+                buttonTop1.setTag(1);
+                buttonTop2.setTag(2);
+                buttonTop1.setOnTouchListener(touchListener);
+                buttonTop2.setOnTouchListener(touchListener);
+                buttonTop1.setOnClickListener(clickListener);
+                buttonTop2.setOnClickListener(clickListener);
+
+
                 int animationStyle = GetResId.getId(context, "style", "popup_fade_in_out");
-                switch (selectSettings.getAnimation()){
+                switch (selectSettings.getAnimation()) {
                     case popup_top_down:
                         animationStyle = GetResId.getId(context, "style", "popup_top_down");
                         break;
@@ -134,18 +146,18 @@ public class PopupSelect {
                 }
 
 
-                if(selectSettings.isAutoHeight()){
+                if (selectSettings.isAutoHeight()) {
                     View listItem = listAdapter.getView(0, null, listView);
                     listItem.measure(0, 0);
                     int relheight = listItem.getMeasuredHeight();
 
-                    if(relheight * selectListDataBeans.size()> selectSettings.getPopupHeight()){
+                    if (relheight * selectListDataBeans.size() > selectSettings.getPopupHeight()) {
                         pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), selectSettings.getPopupHeight());
                     } else {
                         pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), LinearLayout.LayoutParams.WRAP_CONTENT);
                     }
 
-                }else {
+                } else {
                     pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), selectSettings.getPopupHeight());
 
                 }
@@ -310,43 +322,98 @@ public class PopupSelect {
         listView.setScrollBarStyle(selectSettings.getScrollBarStyle());
         listView.setDivider(selectSettings.getListDivider());
         listView.setDividerHeight(selectSettings.getListDividerHeight());
-        if (selectSettings.isShowButton1() || selectSettings.isShowButton2()) {
-            buttonDivision1.setVisibility(View.VISIBLE);
-            buttonDivision1.setBackgroundColor(selectSettings.getButtonDividingColor());
-        } else {
-            buttonDivision1.setVisibility(View.GONE);
-        }
-        if (selectSettings.isShowButton1() && selectSettings.isShowButton2()) {
-            buttonDivision2.setVisibility(View.VISIBLE);
-            buttonDivision2.setBackgroundColor(selectSettings.getButtonDividingColor());
-        } else {
-            buttonDivision2.setVisibility(View.GONE);
-        }
 
-        if (selectSettings.isShowButton1()) {
-            button1.setVisibility(View.VISIBLE);
-            button1.setText(selectSettings.getButtonTextStr1());
-            button1.setTextSize(selectSettings.getButtonTextSize());
-            button1.setTextColor(selectSettings.getButtonTextColor1());
-            button1.setPadding(selectSettings.getButtonPaddings()[0],
-                    selectSettings.getButtonPaddings()[1],
-                    selectSettings.getButtonPaddings()[2],
-                    selectSettings.getButtonPaddings()[3]);
-        } else {
+        if (selectSettings.getPopupGravity() == Gravity.BOTTOM) {
+            //底部弹窗，取消确定显示在上边
             button1.setVisibility(View.GONE);
-        }
-
-        if (selectSettings.isShowButton2()) {
-            button2.setVisibility(View.VISIBLE);
-            button2.setText(selectSettings.getButtonTextStr2());
-            button2.setTextSize(selectSettings.getButtonTextSize());
-            button2.setTextColor(selectSettings.getButtonTextColor2());
-            button2.setPadding(selectSettings.getButtonPaddings()[0],
-                    selectSettings.getButtonPaddings()[1],
-                    selectSettings.getButtonPaddings()[2],
-                    selectSettings.getButtonPaddings()[3]);
-        } else {
             button2.setVisibility(View.GONE);
+            buttonDivision1.setVisibility(View.GONE);
+            buttonDivision2.setVisibility(View.GONE);
+            if (selectSettings.isShowButton1()) {
+                buttonTop1.setVisibility(View.VISIBLE);
+                buttonTop1.setText(selectSettings.getButtonTextStr1());
+                buttonTop1.setTextSize(selectSettings.getButtonTextSize());
+                buttonTop1.setTextColor(selectSettings.getButtonTextColor1());
+                buttonTop1.setPadding(selectSettings.getButtonPaddings()[0],
+                        selectSettings.getButtonPaddings()[1],
+                        selectSettings.getButtonPaddings()[2],
+                        selectSettings.getButtonPaddings()[3]);
+            } else {
+                if (selectSettings.isShowButton2()) {
+                    buttonTop1.setVisibility(View.INVISIBLE);
+
+                } else {
+                    buttonTop1.setVisibility(View.GONE);
+
+                }
+            }
+
+            if (selectSettings.isShowButton2()) {
+                buttonTop2.setVisibility(View.VISIBLE);
+                buttonTop2.setText(selectSettings.getButtonTextStr2());
+                buttonTop2.setTextSize(selectSettings.getButtonTextSize());
+                buttonTop2.setTextColor(selectSettings.getButtonTextColor2());
+                buttonTop2.setPadding(selectSettings.getButtonPaddings()[0],
+                        selectSettings.getButtonPaddings()[1],
+                        selectSettings.getButtonPaddings()[2],
+                        selectSettings.getButtonPaddings()[3]);
+            } else {
+                if (selectSettings.isShowButton1()) {
+                    buttonTop2.setVisibility(View.INVISIBLE);
+
+                } else {
+                    buttonTop2.setVisibility(View.GONE);
+
+                }
+            }
+
+
+        } else {
+
+            if (selectSettings.isShowButton1() || selectSettings.isShowButton2()) {
+                buttonDivision1.setVisibility(View.VISIBLE);
+                buttonDivision1.setBackgroundColor(selectSettings.getButtonDividingColor());
+            } else {
+                buttonDivision1.setVisibility(View.GONE);
+            }
+            if (selectSettings.isShowButton1() && selectSettings.isShowButton2() ) {
+                buttonDivision2.setVisibility(View.VISIBLE);
+                buttonDivision2.setBackgroundColor(selectSettings.getButtonDividingColor());
+            } else {
+                buttonDivision2.setVisibility(View.GONE);
+            }
+
+
+
+            buttonTop1.setVisibility(View.GONE);
+            buttonTop2.setVisibility(View.GONE);
+
+            if (selectSettings.isShowButton1()) {
+                button1.setVisibility(View.VISIBLE);
+                button1.setText(selectSettings.getButtonTextStr1());
+                button1.setTextSize(selectSettings.getButtonTextSize());
+                button1.setTextColor(selectSettings.getButtonTextColor1());
+                button1.setPadding(selectSettings.getButtonPaddings()[0],
+                        selectSettings.getButtonPaddings()[1],
+                        selectSettings.getButtonPaddings()[2],
+                        selectSettings.getButtonPaddings()[3]);
+            } else {
+                button1.setVisibility(View.GONE);
+            }
+
+            if (selectSettings.isShowButton2()) {
+                button2.setVisibility(View.VISIBLE);
+                button2.setText(selectSettings.getButtonTextStr2());
+                button2.setTextSize(selectSettings.getButtonTextSize());
+                button2.setTextColor(selectSettings.getButtonTextColor2());
+                button2.setPadding(selectSettings.getButtonPaddings()[0],
+                        selectSettings.getButtonPaddings()[1],
+                        selectSettings.getButtonPaddings()[2],
+                        selectSettings.getButtonPaddings()[3]);
+            } else {
+                button2.setVisibility(View.GONE);
+            }
+
         }
 
 

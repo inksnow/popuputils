@@ -43,6 +43,28 @@ public class ClickEffectText extends androidx.appcompat.widget.AppCompatTextView
         initColor = getCurrentTextColor();
     }
 
+    public int getInitColor() {
+        return initColor;
+    }
+
+    public void setInitColor(int initColor) {
+        this.initColor = initColor;
+    }
+
+    public int getDownColor() {
+        return downColor;
+    }
+
+    public void setDownColor(int downColor) {
+        this.downColor = downColor;
+    }
+
+
+    @Override
+    public void setTextColor(int color) {
+        super.setTextColor(color);
+        initColor = getCurrentTextColor();
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

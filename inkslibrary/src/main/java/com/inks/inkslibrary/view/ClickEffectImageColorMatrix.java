@@ -38,7 +38,17 @@ public class ClickEffectImageColorMatrix extends androidx.appcompat.widget.AppCo
         super(context, attrs, defStyleAttr);
     }
 
+    public int getDownColor() {
+        return downColor;
+    }
 
+    public void setDownColor(int downColor) {
+        this.downColor = downColor;
+    }
+
+    public static float[] getMATRIX() {
+        return MATRIX;
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

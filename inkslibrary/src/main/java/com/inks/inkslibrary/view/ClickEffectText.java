@@ -60,11 +60,6 @@ public class ClickEffectText extends androidx.appcompat.widget.AppCompatTextView
     }
 
 
-    @Override
-    public void setTextColor(int color) {
-        super.setTextColor(color);
-        initColor = color;
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

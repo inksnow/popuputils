@@ -58,7 +58,7 @@
         <LinearLayout
             android:id="@+id/layout_y_m_d"
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="3.5"
             android:layout_height="wrap_content"
             android:background="#f0f0f0"
             android:orientation="horizontal">
@@ -67,10 +67,10 @@
             <com.inks.inkslibrary.view.PickerView
                 android:id="@+id/pv_year"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 app:tagText="年"
                 app:tagAfterItem="true"
-                app:tagRightDeviation="15dp"
+                app:tagRightDeviation="5dp"
                 android:layout_height="wrap_content"/>
 
             <com.inks.inkslibrary.view.PickerView
@@ -79,7 +79,7 @@
                 android:layout_weight="1"
                 app:tagText="月"
                 app:tagAfterItem="true"
-                app:tagRightDeviation="15dp"
+                app:tagRightDeviation="5dp"
                 android:layout_height="wrap_content"/>
 
             <com.inks.inkslibrary.view.PickerView
@@ -88,7 +88,7 @@
                 android:layout_weight="1"
                 app:tagText="日"
                 app:tagAfterItem="true"
-                app:tagRightDeviation="15dp"
+                app:tagRightDeviation="5dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
@@ -106,7 +106,7 @@
                 android:layout_weight="1"
                 app:tagText="时"
                 app:tagAfterItem="true"
-                app:tagRightDeviation="15dp"
+                app:tagRightDeviation="5dp"
                 android:layout_height="wrap_content"/>
 
             <com.inks.inkslibrary.view.PickerView
@@ -115,7 +115,7 @@
                 android:layout_weight="1"
                 app:tagText="分"
                 app:tagAfterItem="true"
-                app:tagRightDeviation="15dp"
+                app:tagRightDeviation="5dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 

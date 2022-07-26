@@ -101,16 +101,36 @@ public class ListAdapter extends BaseAdapter {
 
         if(selectSettings.isShowListSelectImage()){
 
+            LinearLayout.LayoutParams   paramsLeft =(LinearLayout.LayoutParams)  holder.imageViewLeft.getLayoutParams();
+            paramsLeft.width = selectSettings.getListSelectImageWidth();
+            paramsLeft.height = selectSettings.getListSelectImageHeight();
+            holder.imageViewLeft.setLayoutParams(paramsLeft);
+            holder.imageViewLeft.setPadding(selectSettings.getListSelectImagePaddings()[0],
+                    selectSettings.getListSelectImagePaddings()[1],
+                    selectSettings.getListSelectImagePaddings()[2],
+                    selectSettings.getListSelectImagePaddings()[3]);
+
+            LinearLayout.LayoutParams   paramsRight =(LinearLayout.LayoutParams)  holder.imageViewRight.getLayoutParams();
+            paramsRight.width = selectSettings.getListSelectImageWidth();
+            paramsRight.height = selectSettings.getListSelectImageHeight();
+            holder.imageViewRight.setLayoutParams(paramsRight);
+            holder.imageViewRight.setPadding(selectSettings.getListSelectImagePaddings()[0],
+                    selectSettings.getListSelectImagePaddings()[1],
+                    selectSettings.getListSelectImagePaddings()[2],
+                    selectSettings.getListSelectImagePaddings()[3]);
+
+
+
             switch (selectSettings.getSelectImagePosition()){
                 case LEFT:
                     holder.imageViewLeft.setVisibility(View.VISIBLE);
-                    holder.imageViewRight.setVisibility(View.GONE);
+                    holder.imageViewRight.setVisibility(View.INVISIBLE);
                     initSelectImage(holder.imageViewLeft,position);
 
                     break;
                 case RIGHT:
                     holder.imageViewRight.setVisibility(View.VISIBLE);
-                    holder.imageViewLeft.setVisibility(View.GONE);
+                    holder.imageViewLeft.setVisibility(View.INVISIBLE);
                     initSelectImage(holder.imageViewRight,position);
                     break;
             }

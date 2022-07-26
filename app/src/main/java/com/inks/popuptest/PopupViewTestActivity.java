@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.inks.inkslibrary.Popup.ConvenientPopup;
 import com.inks.inkslibrary.Popup.PopupPrompt;
 import com.inks.inkslibrary.Popup.PopupSelect;
 import com.inks.inkslibrary.Popup.PopupView;
@@ -20,6 +21,7 @@ import com.inks.inkslibrary.Popup.SelectListDataBean;
 import com.inks.inkslibrary.Popup.SelectSettings;
 import com.inks.inkslibrary.Popup.ViewSettings;
 import com.inks.inkslibrary.Utils.L;
+import com.inks.inkslibrary.Utils.T;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +111,45 @@ public class PopupViewTestActivity extends AppCompatActivity {
                                 .build();
                 popupView.popupView(window,context,inflater,textView,promptSettings,4);
                 break;
+            case R.id.test5:
+                ConvenientPopup.getInstance().showPopupMsg(PopupViewTestActivity.this, "这是一个消息提示",true, "", true,new PopupView.onClickListener() {
+                    @Override
+                    public void onYesBack(int what) {
+                        T.showShort(getApplicationContext(),"确认");
+                    }
+
+                    @Override
+                    public void onCancelBack(int what) {
+                        T.showShort(getApplicationContext(),"取消");
+                    }
+                });
+                break;
+            case R.id.test6:
+                List<SelectListDataBean> list = new ArrayList<>();
+                for (int i = 0; i < 15; i++) {
+                    SelectListDataBean selectListDataBean = new SelectListDataBean();
+                    selectListDataBean.setText("请选择");
+                    selectListDataBean.setChoosed(false);
+                    list.add(selectListDataBean);
+                }
+
+
+                ConvenientPopup.getInstance().showSelectBottom(PopupViewTestActivity.this,"",true,list,null);
+                break;
+
+            case R.id.test7:
+                List<SelectListDataBean> list2 = new ArrayList<>();
+                for (int i = 0; i < 15; i++) {
+                    SelectListDataBean selectListDataBean = new SelectListDataBean();
+                    selectListDataBean.setText("请选择");
+                    selectListDataBean.setChoosed(false);
+                    list2.add(selectListDataBean);
+                }
+
+                ConvenientPopup.getInstance().showSelectCenter(PopupViewTestActivity.this,"",false,list2,null);
+                break;
+
+
         }
     }
 

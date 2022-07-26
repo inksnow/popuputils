@@ -7,6 +7,8 @@ public class SelectListDataBean {
     private String text ="";
     private boolean choosed = false;
     private Drawable icon = null;
+    private Object object;
+    private String json;
 
 
     public String getText() {
@@ -31,5 +33,21 @@ public class SelectListDataBean {
 
     public void setIcon(Drawable icon) {
         this.icon = icon;
+    }
+
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
+    public String getJson() {
+        return json;
+    }
+
+    public void setJson(String json) {
+        this.json = json;
     }
 }

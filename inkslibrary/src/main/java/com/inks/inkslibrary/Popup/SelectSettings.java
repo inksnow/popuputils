@@ -452,7 +452,7 @@ public class SelectSettings {
         //滚动条大小
         private int scrollBarSize = 5;
         //滚动条style
-        private int scrollBarStyle =View.SCROLLBARS_INSIDE_INSET ;
+        private int scrollBarStyle =View.SCROLLBARS_INSIDE_OVERLAY;
         //button1文字
         private String buttonTextStr1 = "取消";
         //button2文字

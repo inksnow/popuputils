@@ -70,4 +70,16 @@ public class DensityUtils
         return (pxVal / context.getResources().getDisplayMetrics().scaledDensity);
     }
 
+
+    /**
+     * px转sp
+     *@param context
+     * @param dpVal
+     * @return
+     */
+    public static float dp2sp(Context context, float dpVal)
+    {
+        return (dp2px(context,dpVal) / context.getResources().getDisplayMetrics().scaledDensity);
+    }
+
 }

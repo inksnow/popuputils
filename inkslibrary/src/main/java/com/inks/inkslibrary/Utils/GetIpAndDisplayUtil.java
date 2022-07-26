@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.Window;
 import android.view.WindowManager;
 
 import java.net.Inet4Address;
@@ -167,18 +168,27 @@ public class GetIpAndDisplayUtil {
         manager.getDefaultDisplay().getMetrics(outMetrics);
         int width = outMetrics.widthPixels;
         int height = outMetrics.heightPixels;
-
-//
-//
-//        Display display = activity.getWindowManager().getDefaultDisplay();
-//
-//        Point point = new Point();
-//        display.getSize(point);
-//        int width = point.x;
-//        int height = point.y;
-
         return height;
-
     }
-    
+
+    public static int getDisplayHeight(Window window){
+
+        WindowManager manager = window.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        int width = outMetrics.widthPixels;
+        int height = outMetrics.heightPixels;
+        return height;
+    }
+
+
+    public static int getDisplayWidth(Window window){
+
+        WindowManager manager = window.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        int width = outMetrics.widthPixels;
+        int height = outMetrics.heightPixels;
+        return width;
+    }
 }

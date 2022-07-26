@@ -38,4 +38,36 @@
         android:onClick="ccc"
         android:layout_marginTop="10dp"/>
 
+
+
+        <Button
+            android:id="@+id/test5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="消息提示"
+            android:onClick="ccc"
+            android:layout_marginTop="10dp"/>
+
+
+
+
+    <Button
+        android:id="@+id/test6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="底部弹窗选择"
+        android:onClick="ccc"
+        android:layout_marginTop="10dp"/>
+
+
+    <Button
+        android:id="@+id/test7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="中间弹窗选择"
+        android:onClick="ccc"
+        android:layout_marginTop="10dp"/>
+
+
+
 </LinearLayout>

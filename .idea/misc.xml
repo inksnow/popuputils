@@ -4,10 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_view_test.xml" value="0.16909722222222223" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_web.xml" value="0.13194444444444445" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/scrollviewtest.xml" value="0.12291666666666666" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/drawable/bg_popup_select_date_time.xml" value="0.153" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/activity_lib_up.xml" value="0.4" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_convenient_msg_view.xml" value="0.12743055555555555" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_prompt.xml" value="0.16909722222222223" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_select.xml" value="0.11180555555555556" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_select_date_time.xml" value="0.1" />
@@ -16,7 +18,7 @@
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_select_list.xml" value="0.11180555555555556" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_select_list_2.xml" value="0.11180555555555556" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_select_list_3.xml" value="0.11180555555555556" />
-        <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_view.xml" value="0.10400000000000001" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/inkslibrary/src/main/res/layout/popup_view.xml" value="0.16" />
       </map>
     </option>
   </component>

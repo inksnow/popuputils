@@ -101,10 +101,8 @@ public class PopupSelect {
                                 selectListDataBeans.get(i).setChoosed(false);
                             }
                             selectListDataBeans.get(position).setChoosed(true);
-                            if (selectSettings.isShowButton2()) {
-                                listAdapter.setData(selectListDataBeans);
-                            } else {
-                                listAdapter.setData(selectListDataBeans);
+                            listAdapter.setData(selectListDataBeans);
+                            if (!selectSettings.isShowButton2()) {
                                 miss();
                                 if (selectSettings.getClickListener() != null) {
                                     selectSettings.getClickListener().onChooseBack(selectListDataBeans, what);

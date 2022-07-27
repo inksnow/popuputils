@@ -1,5 +1,4 @@
-更新地址到：https://gitee.com/ink_s/PopupTest/
-最新添加功能 底部弹窗多选及单选，添加时间选择器
+
 
 
 
@@ -30,7 +29,7 @@ allprojects {
 
 build.gradle (app)中  
 
-添加   implementation 'com.github.inksnow:popuputils:1.0.9'   api 'com.gitee.ink_s:PopupTest:1.0.5'
+添加   implementation 'com.github.inksnow:popuputils:1.0.9'  
 
 dependencies {  
 
@@ -38,8 +37,7 @@ dependencies {
     
      ......  
      
-    //implementation 'com.github.inksnow:popuputils:1.0.9'  
-    api 'com.gitee.ink_s:PopupTest:1.0.5'
+    implementation 'com.github.inksnow:popuputils:1.0.9'  
     
 }  
 

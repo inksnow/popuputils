@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelectTestActivity"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/test5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="消息提示"
+        android:onClick="ccc"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/test6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="底部弹窗选择"
+        android:onClick="ccc"
+        android:layout_marginTop="10dp"/>
+    <Button
+        android:id="@+id/test7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="中间弹窗选择"
+        android:onClick="ccc"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/test8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="时间选择，上午下午"
+        android:onClick="ccc"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/test9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="时间选择，时分秒"
+        android:onClick="ccc"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

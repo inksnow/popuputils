@@ -282,7 +282,7 @@ public class ConvenientPopup {
                         .listPaddings(new int[]{dp10 * 2, dp10, dp10 * 2, dp10 * 2})
                         .listSelectImageOff(ContextCompat.getDrawable(context, R.drawable.select_null))
                         .listSelectImageOn(ContextCompat.getDrawable(context, R.drawable.select_1))
-                        .listSelectImagePaddings(new int[]{dp8, dp8, dp8, dp8})
+                        .listSelectImagePaddings(new int[]{dp5, dp5, dp5, dp5})
                         .clippingEnabled(true)
                         .titleDividingColor(0XF0F8F8F8)
                         .buttonDividingColor(0XF0F8F8F8)

@@ -56,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 
                 break;
+            case R.id.button4:
+                intent = new Intent(this,ConvenientPopupActivity.class);
+                startActivity(intent);
+
+                break;
             case R.id.LoadButton:
                 LoadButton loadButton =(LoadButton)  view;
                 loadButton.start(new LoadButton.OnLoadListener() {

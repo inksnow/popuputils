@@ -38,7 +38,11 @@ public class ConvenientPopup {
     private PopupSelectDateTime popupSelectDateTime;
     private PopupSelectDateTime2 popupSelectDateTime2;
 
+    private LoadDialogUtils loadDialogUtils;
+
     private static volatile ConvenientPopup mInstance;
+
+    private Activity mActivity;
 
     private ConvenientPopup() {
         if (popupSelect == null) {
@@ -59,11 +63,8 @@ public class ConvenientPopup {
         if (popupSelectDateTime2 == null) {
             popupSelectDateTime2 = new PopupSelectDateTime2();
         }
-
-
-
-
     }
+
 
     public static ConvenientPopup getInstance() {
         if (mInstance == null) {
@@ -76,6 +77,24 @@ public class ConvenientPopup {
         return mInstance;
     }
 
+
+public void loadDialog(Activity activity,String str,boolean show){
+        if(mActivity!=null && activity.getClass().equals(mActivity.getClass())){
+            if(loadDialogUtils==null){
+                loadDialogUtils = new LoadDialogUtils(activity);
+            }
+        }else{
+            loadDialogUtils = new LoadDialogUtils(activity);
+        }
+        if(show){
+            loadDialogUtils.upText(str);
+        }else{
+            loadDialogUtils.closeDialog();
+        }
+
+    mActivity = activity;
+
+}
 
     /**
      * @param activity activity
@@ -400,13 +419,12 @@ public class ConvenientPopup {
     }
 
 
-
     /**
+     * @throws
      * @Description: 选择年月日
      * @param:
      * @return:
      * @date: 2022/7/26
-     * @throws
      */
     public void showPopupSelectDate(Activity activity, PopupSelectDateTime.OnClickListener dateSelectClick, int what) {
         popupSelectDateTime.popupDateTime(activity.getWindow(), activity.getApplicationContext(), true, true,
@@ -414,33 +432,27 @@ public class ConvenientPopup {
     }
 
     /**
+     * @throws
      * @Description: 选择年月日 上午下午
      * @param:
      * @return:
      * @date: 2022/7/26
-     * @throws
      */
-    public void showPopupSelectDataAmPm(Activity activity,PopupSelectDateAndAmPm.OnClickListener onClickListener,int what){
-        popupSelectDateAndAmPm.popupDateTime(activity.getWindow(),activity.getApplicationContext(),onClickListener,what);
+    public void showPopupSelectDataAmPm(Activity activity, PopupSelectDateAndAmPm.OnClickListener onClickListener, int what) {
+        popupSelectDateAndAmPm.popupDateTime(activity.getWindow(), activity.getApplicationContext(), onClickListener, what);
     }
 
 
-
     /**
+     * @throws
      * @Description: 选择年月日 时分秒
      * @param:
      * @return:
      * @date: 2022/7/26
-     * @throws
      */
-    public void showPopupSelectDataHHSSMM(Activity activity,PopupSelectDateTime2.OnClickListener onClickListener,int what){
-        popupSelectDateTime2.popupDateTime(activity.getWindow(),activity.getApplicationContext(),true, true, onClickListener,what);
+    public void showPopupSelectDataHHSSMM(Activity activity, PopupSelectDateTime2.OnClickListener onClickListener, int what) {
+        popupSelectDateTime2.popupDateTime(activity.getWindow(), activity.getApplicationContext(), true, true, onClickListener, what);
     }
-
-
-
-
-
 
 
     /**
@@ -472,7 +484,7 @@ public class ConvenientPopup {
         return false;
     }
 
-    public boolean isPopupDataTimeShowing(){
+    public boolean isPopupDataTimeShowing() {
         if (popupSelectDateTime != null && popupSelectDateTime.getPopupWindow() != null && popupSelectDateTime.getPopupWindow().isShowing()) {
             return true;
         }

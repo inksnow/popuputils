@@ -2,10 +2,12 @@ package com.inks.popuptest;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.inks.inkslibrary.Popup.ConvenientPopup;
 import com.inks.inkslibrary.Popup.PopupSelectDateAndAmPm;
 import com.inks.inkslibrary.Popup.PopupSelectDateTime;
 import com.inks.inkslibrary.Popup.PopupSelectDateTime2;
@@ -52,9 +54,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.button3:
-                intent = new Intent(this,PopupViewTestActivity.class);
-                startActivity(intent);
-                
+//                intent = new Intent(this,PopupViewTestActivity.class);
+//                startActivity(intent);
+
+                ConvenientPopup.getInstance().loadDialog(MainActivity.this,"正在加载..." , true);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ConvenientPopup.getInstance().loadDialog(MainActivity.this,"正在加载..." , false);
+
+                    }
+                },5000);
                 break;
             case R.id.button4:
                 intent = new Intent(this,ConvenientPopupActivity.class);

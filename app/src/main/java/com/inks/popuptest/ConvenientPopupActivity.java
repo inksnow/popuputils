@@ -1,6 +1,7 @@
 package com.inks.popuptest;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -70,11 +71,22 @@ public class ConvenientPopupActivity extends AppCompatActivity {
 
                 ConvenientPopup.getInstance().showPopupSelectDataHHSSMM(ConvenientPopupActivity.this,null , 0);
                 break;
+            case R.id.test10:
+                ConvenientPopup.getInstance().loadDialog(ConvenientPopupActivity.this,"正在加载..." , true);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ConvenientPopup.getInstance().loadDialog(ConvenientPopupActivity.this,"正在加载..." , false);
+
+                    }
+                },5000);
+                break;
 
 
         }
     }
-    //为了解决弹出PopupWindow后外部的事件不会分发,既外部的界面不可以点击
+    //为了解决弹出PopupWindow后点击穿透
     @Override
     public boolean dispatchTouchEvent(MotionEvent event){
         if ( ConvenientPopup.getInstance().isPopupShowing()){

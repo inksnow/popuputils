@@ -105,7 +105,7 @@ public class ConvenientPopupActivity extends AppCompatActivity {
 
         }
     }
-    //为了解决弹出PopupWindow后外部的事件不会分发,既外部的界面不可以点击
+    //为了解决弹出PopupWindow后点击穿透问题
     @Override
     public boolean dispatchTouchEvent(MotionEvent event){
         if ( ConvenientPopup.getInstance().isPopupShowing()){

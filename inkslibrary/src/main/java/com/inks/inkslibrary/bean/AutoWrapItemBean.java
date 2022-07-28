@@ -9,7 +9,7 @@ public class AutoWrapItemBean {
     private int textColor = 0XFF666666;
     private int textSelectColor= 0xFF3CC18C;
     private int textSizeDp = 16;
-    private int[] paddingDp=new int[] {10,5,10,5};
+    private int[] paddingDp=new int[] {10,10,10,10};
 
     public String getText() {
         return text;

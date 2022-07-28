@@ -33,9 +33,10 @@ public class AutoWrapItem extends ViewGroup {
 
     private AutoWrapItemBean mWrapItemBean;
 
-    public interface AutoWrapItemClick{
-            void onItemClick(int index);
-            void onDeleteClick(int index);
+    public interface AutoWrapItemClick {
+        void onItemClick(int index);
+
+        void onDeleteClick(int index);
     }
 
     public AutoWrapItem(Context context) {
@@ -70,23 +71,28 @@ public class AutoWrapItem extends ViewGroup {
         setMeasuredDimension(specWidthSize, specHeightSize);
     }
 
-    public void setText(AutoWrapItemBean bean,int index) {
-        this.mWrapItemBean =bean;
-        setText(bean.getText(),bean.isDeleteAble(),index,bean.isSelect(),bean.getTextColor(),bean.getTextSelectColor(),bean);
+    public void setText(AutoWrapItemBean bean, int index) {
+        this.mWrapItemBean = bean;
+
+        paddingLeft = DensityUtils.dp2px(context, mWrapItemBean.getPaddingDp()[0]);
+        paddingRight = DensityUtils.dp2px(context, mWrapItemBean.getPaddingDp()[2]);
+        paddingTop = DensityUtils.dp2px(context, mWrapItemBean.getPaddingDp()[1]);
+        paddingBottom = DensityUtils.dp2px(context, mWrapItemBean.getPaddingDp()[3]);
+
+        setText(bean.getText(), bean.isDeleteAble(), index, bean.isSelect(), bean.getTextColor(), bean.getTextSelectColor(), bean);
     }
 
 
-
-    public void setText(String text, boolean deleteAble, int index,boolean select,int textColor,int textSelectColor,AutoWrapItemBean bean) {
+    public void setText(String text, boolean deleteAble, int index, boolean select, int textColor, int textSelectColor, AutoWrapItemBean bean) {
         this.index = index;
         this.deleteAble = deleteAble;
         textView = new TextView(context);
         textView.setGravity(Gravity.CENTER);
         textView.setText(text);
-        textView.setTextSize(px2sp(context,DensityUtils.dp2px(context,bean.getTextSizeDp()) ));
-        if(select){
+        textView.setTextSize(px2sp(context, DensityUtils.dp2px(context, bean.getTextSizeDp())));
+        if (select) {
             textView.setTextColor(textSelectColor);
-        }else{
+        } else {
             textView.setTextColor(textColor);
         }
 
@@ -99,10 +105,10 @@ public class AutoWrapItem extends ViewGroup {
 
         textWidth = (int) Math.ceil(textPaint.measureText(text));
         imageView = new ImageView(context);
-       // imageView.setImageResource(R.drawable.btn_delete);
+        // imageView.setImageResource(R.drawable.btn_delete);
 
-        textView.setOnClickListener( textClick);
-        imageView.setOnClickListener( imageClick);
+        textView.setOnClickListener(textClick);
+        imageView.setOnClickListener(imageClick);
 //        int specHeightSize = MeasureSpec.getSize(textViewHeight+padding*2);//高
 //        int specWidthSize = textWidth+textViewHeight+padding*3;
         // setMeasuredDimension(specWidthSize, specHeightSize);
@@ -126,7 +132,7 @@ public class AutoWrapItem extends ViewGroup {
 //            }
 
 
-            if(autoWrapItemClick!=null){
+            if (autoWrapItemClick != null) {
                 autoWrapItemClick.onItemClick(index);
             }
 
@@ -134,18 +140,16 @@ public class AutoWrapItem extends ViewGroup {
     };
 
 
-
-
     OnClickListener imageClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(autoWrapItemClick!=null){
+            if (autoWrapItemClick != null) {
                 autoWrapItemClick.onDeleteClick(index);
             }
         }
     };
 
-    public void setAutoWrapItemClick(AutoWrapItemClick autoWrapItemClick){
+    public void setAutoWrapItemClick(AutoWrapItemClick autoWrapItemClick) {
         this.autoWrapItemClick = autoWrapItemClick;
     }
 
@@ -182,6 +186,7 @@ public class AutoWrapItem extends ViewGroup {
 
     /**
      * 将px值转换为sp值，保证文字大小不变
+     *
      * @param pxValue
      * @return
      */
@@ -190,7 +195,6 @@ public class AutoWrapItem extends ViewGroup {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
-
 
 
 }

@@ -9,6 +9,7 @@ public class AutoWrapItemBean {
     private int textColor = 0XFF666666;
     private int textSelectColor= 0xFF3CC18C;
     private int textSizeDp = 16;
+    private int[] paddingDp=new int[] {10,5,10,5};
 
     public String getText() {
         return text;
@@ -72,5 +73,13 @@ public class AutoWrapItemBean {
 
     public void setTextSizeDp(int textSizeDp) {
         this.textSizeDp = textSizeDp;
+    }
+
+    public int[] getPaddingDp() {
+        return paddingDp;
+    }
+
+    public void setPaddingDp(int[] paddingDp) {
+        this.paddingDp = paddingDp;
     }
 }

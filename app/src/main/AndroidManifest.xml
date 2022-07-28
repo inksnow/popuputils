@@ -34,6 +34,9 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:label">
         <activity
+            android:name=".AutoWrapTestActivity"
+            android:exported="false" />
+        <activity
             android:name=".ConvenientPopupActivity"
             android:exported="false" />
         <activity

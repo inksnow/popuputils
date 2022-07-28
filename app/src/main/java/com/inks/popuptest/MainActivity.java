@@ -70,7 +70,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button4:
                 intent = new Intent(this,ConvenientPopupActivity.class);
                 startActivity(intent);
-
+                break;
+            case R.id.button5:
+                intent = new Intent(this,AutoWrapTestActivity.class);
+                startActivity(intent);
                 break;
             case R.id.LoadButton:
                 LoadButton loadButton =(LoadButton)  view;

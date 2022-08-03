@@ -138,7 +138,7 @@ public class PopupSelectDateTime {
     public void popupDateTime(Window window, Context context, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener,int what,float alpha) {
         initSelectWithNowTime();
 
-        popupDateTime(window,context,null,showYearMonthDay,showHourMinute,mOnClickListener,selectYear,selectMonth,selectDay,selectHour,selectMinute,what,0.5f);
+        popupDateTime(window,context,null,showYearMonthDay,showHourMinute,mOnClickListener,selectYear,selectMonth,selectDay,selectHour,selectMinute,what,alpha);
     }
 
     public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, OnClickListener mOnClickListener,int what) {

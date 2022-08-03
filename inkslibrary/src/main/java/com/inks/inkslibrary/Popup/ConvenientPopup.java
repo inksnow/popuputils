@@ -419,6 +419,8 @@ public void loadDialog(Activity activity,String str,boolean show){
     }
 
 
+
+
     /**
      * @throws
      * @Description: 选择年月日
@@ -426,10 +428,15 @@ public void loadDialog(Activity activity,String str,boolean show){
      * @return:
      * @date: 2022/7/26
      */
-    public void showPopupSelectDate(Activity activity, PopupSelectDateTime.OnClickListener dateSelectClick, int what) {
-        popupSelectDateTime.popupDateTime(activity.getWindow(), activity.getApplicationContext(), true, true,
-                dateSelectClick, what);
+    public void showPopupSelectYearMonthDay(Activity activity, PopupSelectDateTime.OnClickListener dateSelectClick, int what) {
+        showPopupSelectYearMonthDay(activity, dateSelectClick, what,1.0f);
     }
+    public void showPopupSelectYearMonthDay(Activity activity, PopupSelectDateTime.OnClickListener dateSelectClick, int what,float alpha) {
+        popupSelectDateTime.popupDateTime(activity.getWindow(), activity.getApplicationContext(), true, false,
+                dateSelectClick, what,alpha);
+    }
+
+
 
     /**
      * @throws
@@ -439,9 +446,11 @@ public void loadDialog(Activity activity,String str,boolean show){
      * @date: 2022/7/26
      */
     public void showPopupSelectDataAmPm(Activity activity, PopupSelectDateAndAmPm.OnClickListener onClickListener, int what) {
-        popupSelectDateAndAmPm.popupDateTime(activity.getWindow(), activity.getApplicationContext(), onClickListener, what);
+        showPopupSelectDataAmPm(activity, onClickListener, what,1.0f);
     }
-
+    public void showPopupSelectDataAmPm(Activity activity, PopupSelectDateAndAmPm.OnClickListener onClickListener, int what,float a) {
+        popupSelectDateAndAmPm.popupDateTime(activity.getWindow(), activity.getApplicationContext(), onClickListener, what,a);
+    }
 
     /**
      * @throws
@@ -451,7 +460,26 @@ public void loadDialog(Activity activity,String str,boolean show){
      * @date: 2022/7/26
      */
     public void showPopupSelectDataHHSSMM(Activity activity, PopupSelectDateTime2.OnClickListener onClickListener, int what) {
-        popupSelectDateTime2.popupDateTime(activity.getWindow(), activity.getApplicationContext(), true, true, onClickListener, what);
+        showPopupSelectDataHHSSMM(activity, onClickListener, what,1.0f);
+    }
+
+    public void showPopupSelectDataHHSSMM(Activity activity, PopupSelectDateTime2.OnClickListener onClickListener, int what,float alpha) {
+        popupSelectDateTime2.popupDateTime(activity.getWindow(), activity.getApplicationContext(), true, true, onClickListener, what,alpha);
+    }
+
+    /**
+     * @throws
+     * @Description: 选择年月日时分，上下布局？
+     * @param:
+     * @return:
+     * @date: 2022/7/26
+     */
+    public void showPopupSelectData(Activity activity, PopupSelectDateTime.OnClickListener dateSelectClick, int what) {
+       showPopupSelectData(activity, dateSelectClick, what,1.0f);
+    }
+    public void showPopupSelectData(Activity activity, PopupSelectDateTime.OnClickListener dateSelectClick, int what,float alpha) {
+        popupSelectDateTime.popupDateTime(activity.getWindow(), activity.getApplicationContext(), true, true,
+                dateSelectClick, what,alpha);
     }
 
 

@@ -130,14 +130,23 @@ public class PopupSelectDateAndAmPm {
         popupDateTime(window, context, null, mOnClickListener, selectYear, selectMonth, selectDay ,what);
     }
 
+    public void popupDateTime(Window window, Context context, OnClickListener mOnClickListener, int what,float a) {
+        initSelectWithNowTime();
+        popupDateTime(window, context, null, mOnClickListener, selectYear, selectMonth, selectDay ,what,a);
+    }
+
     public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, OnClickListener mOnClickListener, int what) {
         initSelectWithNowTime();
         popupDateTime(window, context, settings, mOnClickListener, selectYear, selectMonth, selectDay, what);
     }
+    public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings,  OnClickListener mOnClickListener,
+                              int selectYear, int selectMonth, int selectDay,  int what) {
+        popupDateTime(window, context, settings, mOnClickListener, selectYear, selectMonth, selectDay, what,0.5f);
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings,  OnClickListener mOnClickListener,
-                              int selectYear, int selectMonth, int selectDay,  int what) {
+                              int selectYear, int selectMonth, int selectDay,  int what,float a) {
 
         initLists();
         this.window = window;
@@ -188,7 +197,7 @@ public class PopupSelectDateAndAmPm {
             pWindow.setOutsideTouchable(true);
             pWindow.setBackgroundDrawable(new BitmapDrawable());
             pWindow.setClippingEnabled(true);
-            backgroundAlpha(0.5F);
+            backgroundAlpha(a);
             pWindow.showAtLocation(window.getDecorView(), Gravity.BOTTOM, 0, 0);
             pWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override

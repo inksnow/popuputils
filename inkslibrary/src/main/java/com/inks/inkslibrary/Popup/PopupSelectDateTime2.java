@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.inks.inkslibrary.R;
 import com.inks.inkslibrary.view.ClickEffectText;
 import com.inks.inkslibrary.view.PickerView;
-import com.inks.inkslibrary.view.RollerPickerView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -136,14 +135,25 @@ public class PopupSelectDateTime2 {
         popupDateTime(window, context, null, showYearMonthDay, showHourMinute, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute,what);
     }
 
+    public void popupDateTime(Window window, Context context, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener, int what, float alpha) {
+        initSelectWithNowTime();
+
+        popupDateTime(window,context,null,showYearMonthDay,showHourMinute,mOnClickListener,selectYear,selectMonth,selectDay,selectHour,selectMinute,what,alpha);
+    }
+
     public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, OnClickListener mOnClickListener,int what) {
         initSelectWithNowTime();
         popupDateTime(window, context, settings, true, true, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute,what);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener,
                               int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int what) {
+        popupDateTime(window, context, settings, showYearMonthDay, showHourMinute, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute, what,0.5f);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener,
+                              int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int what,float alpha) {
 
         initLists();
         this.window = window;
@@ -209,7 +219,7 @@ public class PopupSelectDateTime2 {
             pWindow.setOutsideTouchable(true);
             pWindow.setBackgroundDrawable(new BitmapDrawable());
             pWindow.setClippingEnabled(true);
-            backgroundAlpha(0.5F);
+            backgroundAlpha(alpha);
             pWindow.showAtLocation(window.getDecorView(), Gravity.BOTTOM, 0, 0);
             pWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override

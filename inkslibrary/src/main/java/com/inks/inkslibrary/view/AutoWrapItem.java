@@ -89,7 +89,9 @@ public class AutoWrapItem extends ViewGroup {
         textView = new TextView(context);
         textView.setGravity(Gravity.CENTER);
         textView.setText(text);
-        textView.setTextSize(px2sp(context, DensityUtils.dp2px(context, bean.getTextSizeDp())));
+        if(bean.getTextSizeDp()!=0){
+            textView.setTextSize(px2sp(context, DensityUtils.dp2px(context, bean.getTextSizeDp())));
+        }
         if (select) {
             textView.setTextColor(textSelectColor);
         } else {
@@ -180,7 +182,17 @@ public class AutoWrapItem extends ViewGroup {
             }
         }
         //setBackgroundColor(0XFF556600);
-        setBackgroundResource(R.drawable.p_auto_wrap_shape_rectangle_bg);
+        if(mWrapItemBean.getBackgroundResource()!=-1 && mWrapItemBean.getSelectBackgroundResource()!=-1){
+            if(mWrapItemBean.isSelect()){
+                setBackgroundResource(mWrapItemBean.getSelectBackgroundResource());
+            }else{
+                setBackgroundResource(mWrapItemBean.getBackgroundResource());
+            }
+
+        }else{
+            setBackgroundResource(R.drawable.p_auto_wrap_shape_rectangle_bg);
+
+        }
     }
 
 

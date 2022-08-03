@@ -8,8 +8,10 @@ public class AutoWrapItemBean {
     private String json;
     private int textColor = 0XFF666666;
     private int textSelectColor= 0xFF3CC18C;
-    private int textSizeDp = 16;
+    private int textSizeDp = 0;
     private int[] paddingDp=new int[] {10,10,10,10};
+    private int selectBackgroundResource = -1;
+    private int backgroundResource = -1;
 
     public String getText() {
         return text;
@@ -81,5 +83,21 @@ public class AutoWrapItemBean {
 
     public void setPaddingDp(int[] paddingDp) {
         this.paddingDp = paddingDp;
+    }
+
+    public int getSelectBackgroundResource() {
+        return selectBackgroundResource;
+    }
+
+    public void setSelectBackgroundResource(int selectBackgroundResource) {
+        this.selectBackgroundResource = selectBackgroundResource;
+    }
+
+    public int getBackgroundResource() {
+        return backgroundResource;
+    }
+
+    public void setBackgroundResource(int backgroundResource) {
+        this.backgroundResource = backgroundResource;
     }
 }

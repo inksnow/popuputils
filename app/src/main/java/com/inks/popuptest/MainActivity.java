@@ -1,11 +1,16 @@
 package com.inks.popuptest;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.inks.inkslibrary.Popup.ConvenientPopup;
 import com.inks.inkslibrary.Popup.PopupSelectDateAndAmPm;
@@ -36,10 +41,8 @@ public class MainActivity extends AppCompatActivity {
 // 注意：月份是从0开始计数的
         dateTimePickerView.setSelectedDate(new GregorianCalendar(2023, 6, 27, 21, 30));
 
-        L.ee(GetMacUtil.getMacAddr());
-        L.ee(GetMacUtil.getMacAddress(getApplicationContext()));
-        L.ee(MacUtils.getMacAddress(getApplicationContext()));
 
+        requestMyPermissions();
     }
 
     public void buttonClick(View view) {
@@ -73,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.button5:
                 intent = new Intent(this,AutoWrapTestActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.button6:
+                intent = new Intent(this,TestImageActivity.class);
                 startActivity(intent);
                 break;
             case R.id.LoadButton:
@@ -133,5 +140,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    private void requestMyPermissions() {
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //没有授权，编写申请权限代码
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+        } else {
+            Log.d("TAG", "requestMyPermissions: 有写SD权限");
+        }
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //没有授权，编写申请权限代码
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 100);
+        } else {
+            Log.d("TAG", "requestMyPermissions: 有读SD权限");
+        }
+    }
 
 }

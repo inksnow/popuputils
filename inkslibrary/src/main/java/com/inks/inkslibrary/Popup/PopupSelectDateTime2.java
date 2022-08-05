@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.inks.inkslibrary.R;
@@ -47,6 +48,7 @@ public class PopupSelectDateTime2 {
 
     private int what;
 
+    private RelativeLayout  rootView;
     //选择
     private int selectYear, selectMonth, selectDay, selectHour, selectMinute;
 
@@ -168,6 +170,9 @@ public class PopupSelectDateTime2 {
             contentView = LayoutInflater.from(context).inflate(R.layout.popup_select_date_time_2, null);
             pWindow = new PopupWindow(contentView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
+            rootView= contentView.findViewById(R.id.root_layout);
+            rootView.getBackground().mutate().setAlpha((int) (alpha*255));
+
             textViewTime = contentView.findViewById(R.id.tv_time);
             setText();
 
@@ -219,12 +224,12 @@ public class PopupSelectDateTime2 {
             pWindow.setOutsideTouchable(true);
             pWindow.setBackgroundDrawable(new BitmapDrawable());
             pWindow.setClippingEnabled(true);
-            backgroundAlpha(alpha);
+            //backgroundAlpha(alpha);
             pWindow.showAtLocation(window.getDecorView(), Gravity.BOTTOM, 0, 0);
             pWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
-                    backgroundAlpha(1f);
+                    //backgroundAlpha(1f);
 
                 }
             });

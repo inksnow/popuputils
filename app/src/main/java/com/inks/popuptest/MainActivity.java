@@ -13,15 +13,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.inks.inkslibrary.Popup.ConvenientPopup;
+import com.inks.inkslibrary.Popup.PopupSelect;
 import com.inks.inkslibrary.Popup.PopupSelectDateAndAmPm;
 import com.inks.inkslibrary.Popup.PopupSelectDateTime;
 import com.inks.inkslibrary.Popup.PopupSelectDateTime2;
+import com.inks.inkslibrary.Popup.SelectListDataBean;
 import com.inks.inkslibrary.Utils.GetMacUtil;
 import com.inks.inkslibrary.Utils.L;
 import com.inks.inkslibrary.Utils.MacUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import top.defaults.view.DateTimePickerView;
 
@@ -59,16 +63,38 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button3:
 //                intent = new Intent(this,PopupViewTestActivity.class);
 //                startActivity(intent);
+                List<SelectListDataBean>  list = new ArrayList<>();
 
-                ConvenientPopup.getInstance().loadDialog(MainActivity.this,"正在加载..." , true);
+                for (int i = 0; i < 20; i++) {
+                    SelectListDataBean bean = new SelectListDataBean();
+                    bean.setText("ccccccccccccc"+i);
+                    list.add(bean);
+                }
 
-                new Handler().postDelayed(new Runnable() {
+
+
+                ConvenientPopup.getInstance().showSelectBottom(MainActivity.this, "请选择", false,list, new PopupSelect.onClickListener() {
                     @Override
-                    public void run() {
-                        ConvenientPopup.getInstance().loadDialog(MainActivity.this,"正在加载..." , false);
+                    public void onChooseBack(List<SelectListDataBean> selectListDataBeans, int what) {
 
                     }
-                },5000);
+
+                    @Override
+                    public void onCancelBack(List<SelectListDataBean> selectListDataBeans, int what) {
+
+                    }
+                });
+
+
+//                ConvenientPopup.getInstance().loadDialog(MainActivity.this,"正在加载..." , true);
+//
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        ConvenientPopup.getInstance().loadDialog(MainActivity.this,"正在加载..." , false);
+//
+//                    }
+//                },5000);
                 break;
             case R.id.button4:
                 intent = new Intent(this,ConvenientPopupActivity.class);

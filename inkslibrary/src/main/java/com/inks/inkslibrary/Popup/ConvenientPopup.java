@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class ConvenientPopup {
 
-    private PopupSelect popupSelect;
+    private PopupSelect2 popupSelect;
     private PopupView popupView;
 
     private PopupSelectDateAndAmPm popupSelectDateAndAmPm;
@@ -46,7 +46,7 @@ public class ConvenientPopup {
 
     private ConvenientPopup() {
         if (popupSelect == null) {
-            popupSelect = new PopupSelect();
+            popupSelect = new PopupSelect2();
         }
         if (popupView == null) {
             popupView = new PopupView();
@@ -306,6 +306,7 @@ public void loadDialog(Activity activity,String str,boolean show){
                         .titleDividingColor(0XF0F8F8F8)
                         .buttonDividingColor(0XF0F8F8F8)
                         .focusable(focusable)
+                      //  .bgAlpha(1)
                         .build();
         popupSelect.popupSelect(window, context, layoutInflater, promptSettings, what);
 
@@ -413,6 +414,7 @@ public void loadDialog(Activity activity,String str,boolean show){
                         .titleDividingColor(0XF0F8F8F8)
                         .buttonDividingColor(0XF0F8F8F8)
                         .focusable(focusable)
+                       // .bgAlpha(1)
                         .build();
         popupSelect.popupSelect(window, context, layoutInflater, promptSettings, what);
 

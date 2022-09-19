@@ -11,18 +11,21 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.inks.inkslibrary.R;
 import com.inks.inkslibrary.Utils.GetResId;
 import com.inks.inkslibrary.Utils.L;
 
 import java.util.List;
 
-public class PopupSelect {
+public class PopupSelect2 {
     public interface onClickListener {
         public void onChooseBack(List<SelectListDataBean> selectListDataBeans, int what);
 
@@ -64,7 +67,18 @@ public class PopupSelect {
         if (selectListDataBeans != null) {
             if (!(pWindow != null && pWindow.isShowing())) {
 
-                contentView = inflater.inflate(GetResId.getId(context, "layout", "popup_select"), null);
+                contentView = inflater.inflate(GetResId.getId(context, "layout", "popup_select_2"), null);
+
+                FrameLayout rootView= contentView.findViewById(R.id.root_layout);
+                rootView.getBackground().mutate().setAlpha((int) (selectSettings.getBgAlpha()*255));
+
+                rootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        miss();
+                    }
+                });
+
                 bgView = contentView.findViewById(GetResId.getId(context, "id", "popup_select"));
                 titleView = contentView.findViewById(GetResId.getId(context, "id", "popup_title"));
                 titleIcon = contentView.findViewById(GetResId.getId(context, "id", "popup_title_icon"));
@@ -143,20 +157,36 @@ public class PopupSelect {
                         break;
                 }
 
-
+                pWindow = new PopupWindow(contentView,LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
                 if (selectSettings.isAutoHeight()) {
                     View listItem = listAdapter.getView(0, null, listView);
                     listItem.measure(0, 0);
                     int relheight = listItem.getMeasuredHeight();
 
                     if (relheight * selectListDataBeans.size() > selectSettings.getPopupHeight()) {
-                        pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), selectSettings.getPopupHeight());
+                        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) bgView.getLayoutParams();
+                        layoutParams.width=selectSettings.getPopupWidth();
+                        layoutParams.height=selectSettings.getPopupHeight();
+                        layoutParams.gravity=selectSettings.getPopupGravity();
+
+                        bgView.setLayoutParams(layoutParams);
+
                     } else {
-                        pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), LinearLayout.LayoutParams.WRAP_CONTENT);
+                        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) bgView.getLayoutParams();
+                        layoutParams.width=selectSettings.getPopupWidth();
+                        layoutParams.height=LinearLayout.LayoutParams.WRAP_CONTENT;
+                        layoutParams.gravity=selectSettings.getPopupGravity();
+
+                        bgView.setLayoutParams(layoutParams);
                     }
 
                 } else {
-                    pWindow = new PopupWindow(contentView, selectSettings.getPopupWidth(), selectSettings.getPopupHeight());
+                    FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) bgView.getLayoutParams();
+                    layoutParams.width=selectSettings.getPopupWidth();
+                    layoutParams.height=selectSettings.getPopupHeight();
+                    layoutParams.gravity=selectSettings.getPopupGravity();
+                    bgView.setLayoutParams(layoutParams);
+
 
                 }
 
@@ -173,7 +203,7 @@ public class PopupSelect {
                 pWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
-                        backgroundAlpha(1f);
+                       // backgroundAlpha(1f);
 
                     }
                 });
@@ -239,7 +269,10 @@ public class PopupSelect {
     @SuppressLint("WrongConstant")
     private void initView() {
 
-        backgroundAlpha(selectSettings.getBgAlpha());
+      //  backgroundAlpha(selectSettings.getBgAlpha());
+
+
+
 
         //背景色及圆角
         GradientDrawable drawable = new GradientDrawable();

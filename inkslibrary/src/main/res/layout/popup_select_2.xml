@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333332"
+    android:id="@+id/root_layout"
+    >
+
+    <LinearLayout
+        android:id="@+id/popup_select"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="#ffffff"
+        android:orientation="vertical">
+
+
+
+        <LinearLayout
+            android:id="@+id/popup_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/popup_button_top_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:text="取消" />
+
+            <ImageView
+                android:id="@+id/popup_title_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="centerInside"
+                />
+
+            <TextView
+                android:id="@+id/popup_title_text"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="这是一个标题" />
+
+
+            <TextView
+                android:id="@+id/popup_button_top_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:text="确定" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/popup_title_division"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            >
+
+        </View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <ListView
+                android:id="@+id/popup_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+            </ListView>
+        </LinearLayout>
+
+
+        <View
+            android:id="@+id/popup_list_division"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            >
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/popup_button_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="取消" />
+
+            <View
+                android:id="@+id/popup_button_division"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                >
+
+            </View>
+
+            <TextView
+                android:id="@+id/popup_button_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="确定" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

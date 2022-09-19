@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.inks.inkslibrary.R;
 import com.inks.inkslibrary.Utils.GetResId;
 import com.inks.inkslibrary.Utils.L;
 
@@ -173,7 +174,7 @@ public class PopupSelect {
                 pWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
-                        backgroundAlpha(1f);
+                        //backgroundAlpha(1f);
 
                     }
                 });
@@ -239,7 +240,9 @@ public class PopupSelect {
     @SuppressLint("WrongConstant")
     private void initView() {
 
-        backgroundAlpha(selectSettings.getBgAlpha());
+        //backgroundAlpha(selectSettings.getBgAlpha());
+        View rootView = contentView.findViewById(R.id.root_layout);
+        rootView.getBackground().mutate().setAlpha((int) (0.5 * 255));
 
         //背景色及圆角
         GradientDrawable drawable = new GradientDrawable();
@@ -374,13 +377,12 @@ public class PopupSelect {
             } else {
                 buttonDivision1.setVisibility(View.GONE);
             }
-            if (selectSettings.isShowButton1() && selectSettings.isShowButton2() ) {
+            if (selectSettings.isShowButton1() && selectSettings.isShowButton2()) {
                 buttonDivision2.setVisibility(View.VISIBLE);
                 buttonDivision2.setBackgroundColor(selectSettings.getButtonDividingColor());
             } else {
                 buttonDivision2.setVisibility(View.GONE);
             }
-
 
 
             buttonTop1.setVisibility(View.GONE);

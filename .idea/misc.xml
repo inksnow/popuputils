@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/drawable/ripple_1.xml" value="0.1485" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/drawable/ripple_2.xml" value="0.1485" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/drawable/ripple_4.xml" value="0.1485" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/drawable/ripple_5.xml" value="0.1485" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_auto_wrap_test.xml" value="0.16909722222222223" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_convenient_popup.xml" value="0.1" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_main_2.xml" value="0.16909722222222223" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_test_image.xml" value="0.13159722222222223" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_view_test.xml" value="0.16909722222222223" />
         <entry key="..\:/Android/AndroidStudioProject/PopupTest/app/src/main/res/layout/activity_web.xml" value="0.13194444444444445" />
@@ -71,7 +76,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/r1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="buttonClick"
+        android:background="@drawable/ripple_4"
+        android:paddingTop="200dp">
+
+
+        <Button
+            android:id="@+id/r2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:onClick="buttonClick"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ripple_5"/>
+
+
+
+    </RelativeLayout>
+
+</layout>

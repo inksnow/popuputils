@@ -33,16 +33,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        selectDateTime = new PopupSelectDateTime();
-        selectDateTime2 = new PopupSelectDateTime2();
-        selectDateAndAmPm = new PopupSelectDateAndAmPm();
-        DateTimePickerView dateTimePickerView = findViewById(R.id.datePickerView) ;
-        dateTimePickerView.setStartDate(Calendar.getInstance());
-// 注意：月份是从0开始计数的
-        dateTimePickerView.setSelectedDate(new GregorianCalendar(2023, 6, 27, 21, 30));
-
-
-        requestMyPermissions();
+//        selectDateTime = new PopupSelectDateTime();
+//        selectDateTime2 = new PopupSelectDateTime2();
+//        selectDateAndAmPm = new PopupSelectDateAndAmPm();
+//        DateTimePickerView dateTimePickerView = findViewById(R.id.datePickerView) ;
+//        dateTimePickerView.setStartDate(Calendar.getInstance());
+//// 注意：月份是从0开始计数的
+//        dateTimePickerView.setSelectedDate(new GregorianCalendar(2023, 6, 27, 21, 30));
+//
+//
+//        requestMyPermissions();
     }
 
     public void buttonClick(View view) {

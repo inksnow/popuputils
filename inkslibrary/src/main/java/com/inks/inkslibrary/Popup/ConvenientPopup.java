@@ -439,6 +439,21 @@ public void loadDialog(Activity activity,String str,boolean show){
     }
 
 
+    /**
+     * @Description: 只选择年
+     * @param:
+     * @return:
+     * @date: 2022/10/12
+     * @throws
+     */
+    public void showPopupSelectYear(Activity activity, PopupSelectDateTime2.OnClickListener dateSelectClick, int what ) {
+        popupSelectDateTime2.popupDateTime(activity.getWindow(), activity.getApplicationContext(), true, false,
+                dateSelectClick, what,true);
+    }
+    public void showPopupSelectYear(Activity activity, PopupSelectDateTime2.OnClickListener dateSelectClick, int what,float alpha ) {
+        popupSelectDateTime2.popupDateTime(activity.getWindow(), activity.getApplicationContext(), true, false,
+                dateSelectClick, what,alpha,true);
+    }
 
     /**
      * @throws

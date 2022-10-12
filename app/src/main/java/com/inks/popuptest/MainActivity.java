@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        selectDateTime = new PopupSelectDateTime();
-//        selectDateTime2 = new PopupSelectDateTime2();
+       selectDateTime2 = new PopupSelectDateTime2();
 //        selectDateAndAmPm = new PopupSelectDateAndAmPm();
 //        DateTimePickerView dateTimePickerView = findViewById(R.id.datePickerView) ;
 //        dateTimePickerView.setStartDate(Calendar.getInstance());
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(new Intent(MainActivity.this,WebActivity.class));
                                 loadButton.re();
                             }
-                        },0);
+                        },0,true);
 
 
 

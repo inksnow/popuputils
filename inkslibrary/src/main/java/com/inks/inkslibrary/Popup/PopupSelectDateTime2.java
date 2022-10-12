@@ -45,6 +45,7 @@ public class PopupSelectDateTime2 {
     private int rightYear = 100;
     private boolean showYearMonthDay;
     private boolean showHourMinute;
+    private boolean onlyYear = false;
 
     private int what;
 
@@ -137,11 +138,29 @@ public class PopupSelectDateTime2 {
         popupDateTime(window, context, null, showYearMonthDay, showHourMinute, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute,what);
     }
 
+    public void popupDateTime(Window window, Context context, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener,int what,boolean onlyYear) {
+        initSelectWithNowTime();
+        popupDateTime(window, context, null, showYearMonthDay, showHourMinute, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute,what,0.5f,onlyYear);
+
+
+    }
+
+
     public void popupDateTime(Window window, Context context, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener, int what, float alpha) {
         initSelectWithNowTime();
 
         popupDateTime(window,context,null,showYearMonthDay,showHourMinute,mOnClickListener,selectYear,selectMonth,selectDay,selectHour,selectMinute,what,alpha);
     }
+
+
+
+    public void popupDateTime(Window window, Context context, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener, int what, float alpha,boolean onlyYear) {
+        initSelectWithNowTime();
+
+        popupDateTime(window,context,null,showYearMonthDay,showHourMinute,mOnClickListener,selectYear,selectMonth,selectDay,selectHour,selectMinute,what,alpha,onlyYear);
+    }
+
+
 
     public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, OnClickListener mOnClickListener,int what) {
         initSelectWithNowTime();
@@ -153,9 +172,17 @@ public class PopupSelectDateTime2 {
         popupDateTime(window, context, settings, showYearMonthDay, showHourMinute, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute, what,0.5f);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+
     public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener,
                               int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int what,float alpha) {
+
+        popupDateTime(window, context, settings, showYearMonthDay, showHourMinute, mOnClickListener, selectYear, selectMonth, selectDay, selectHour, selectMinute, what, alpha,false);
+    }
+
+
+    @SuppressLint("ClickableViewAccessibility")
+    public void popupDateTime(Window window, Context context, final SelectDateTimeSettings settings, boolean showYearMonthDay, boolean showHourMinute, OnClickListener mOnClickListener,
+                              int selectYear, int selectMonth, int selectDay, int selectHour, int selectMinute,int what,float alpha,boolean onlyYear) {
 
         initLists();
         this.window = window;
@@ -165,6 +192,7 @@ public class PopupSelectDateTime2 {
         this.showYearMonthDay = showYearMonthDay;
         this.showHourMinute = showHourMinute;
         this.what = what;
+        this.onlyYear = onlyYear;
 
         if (!(pWindow != null && pWindow.isShowing())) {
             contentView = LayoutInflater.from(context).inflate(R.layout.popup_select_date_time_2, null);
@@ -205,6 +233,11 @@ public class PopupSelectDateTime2 {
                 layoutHour.setVisibility(View.GONE);
             }
 
+            if(onlyYear){
+                monthPicker.setVisibility(View.GONE);
+                dayPicker.setVisibility(View.GONE);
+                layoutHour.setVisibility(View.GONE);
+            }
 
             buttonDone = contentView.findViewById(R.id.buttonDone);
             buttonCancel = contentView.findViewById(R.id.buttonCancel);
@@ -242,6 +275,12 @@ public class PopupSelectDateTime2 {
 
 
     private void setText() {
+
+        if(onlyYear){
+            textViewTime.setText(String.format("%04d", selectYear));
+            return;
+        }
+
         if (showYearMonthDay && showHourMinute) {
             textViewTime.setText(String.format("%04d", selectYear) + "-"
                     + String.format("%02d", selectMonth) + "-"
